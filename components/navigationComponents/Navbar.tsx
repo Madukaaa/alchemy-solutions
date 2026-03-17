@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, X, Facebook, Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -16,6 +16,9 @@ const poppins = Poppins({
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [useLightLogo, setUseLightLogo] = useState(false);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+  const logoRef = useRef<HTMLAnchorElement | null>(null);
 
   const navItems = [
     { label: "Home", href: "/" },
@@ -38,15 +41,68 @@ export default function Navbar() {
 
   const isMenuVisible = isOpen || isClosing;
 
+  const updateLogoByCurtainPosition = useCallback(() => {
+    const overlayEl = overlayRef.current;
+    const logoEl = logoRef.current;
+
+    if (!overlayEl || !logoEl) {
+      return;
+    }
+
+    const clipPath = window.getComputedStyle(overlayEl).clipPath;
+    const insetMatch = clipPath.match(/^inset\(([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s\)]+)\)/);
+
+    if (!insetMatch) {
+      return;
+    }
+
+    const leftInsetValue = insetMatch[4];
+    const viewportWidth = window.innerWidth;
+    let leftEdgePx = Number.NaN;
+
+    if (leftInsetValue.endsWith("%")) {
+      leftEdgePx = (parseFloat(leftInsetValue) / 100) * viewportWidth;
+    } else if (leftInsetValue.endsWith("px")) {
+      leftEdgePx = parseFloat(leftInsetValue);
+    }
+
+    if (Number.isNaN(leftEdgePx)) {
+      return;
+    }
+
+    const logoRect = logoEl.getBoundingClientRect();
+    const isCurtainBehindLogo = leftEdgePx <= logoRect.right;
+    setUseLightLogo(isCurtainBehindLogo);
+  }, []);
+
+  useEffect(() => {
+    if (!isMenuVisible) {
+      setUseLightLogo(false);
+      return;
+    }
+
+    let frameId = 0;
+    const track = () => {
+      updateLogoByCurtainPosition();
+      frameId = window.requestAnimationFrame(track);
+    };
+
+    frameId = window.requestAnimationFrame(track);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+    };
+  }, [isMenuVisible, updateLogoByCurtainPosition]);
+
   return (
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-60 flex items-center justify-between px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24 2xl:px-32 py-6 bg-transparent ${poppins.className}`}
       >
         {/* Logo */}
-        <Link href="/" className="flex items-center">
+        <Link href="/" className="flex items-center" ref={logoRef}>
           <Image
-            src="/Alchemy logo ai-02.png"
+            src={useLightLogo ? "/Alchemy logo ai-01.png" : "/Alchemy logo ai-02.png"}
             alt="Alchemy Logo"
             width={105}
             height={35}
@@ -81,6 +137,7 @@ export default function Navbar() {
 
       {/* Fullscreen Overlay */}
       <div
+        ref={overlayRef}
         aria-hidden={!isOpen}
         onTransitionEnd={(event) => {
           if (event.propertyName === "clip-path" && !isOpen) {
