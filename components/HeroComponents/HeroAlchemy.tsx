@@ -1,19 +1,11 @@
 "use client";
 
 import { LampContainer } from "@/components/ui/lamp";
-import { Poppins } from "next/font/google";
 import { motion } from "framer-motion";
-
-const poppins = Poppins({
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-  subsets: ["latin"],
-});
 
 export default function HeroAlchemy() {
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-start bg-black ${poppins.className}`}
-    >
+    <main className="flex min-h-screen flex-col items-center justify-start bg-black font-sans">
       <LampContainer className="justify-start pt-64 md:pt-80">
         <motion.div
           initial={{ opacity: 0.5, y: 100 }}
