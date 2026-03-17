@@ -32,12 +32,12 @@ export default function Navbar() {
 
         {/* Right side actions */}
         <div className="flex items-center space-x-6">
-          <button className="hidden sm:block px-6 py-2.5 rounded-full border border-[#E87A27] text-white text-sm font-medium hover:bg-[#E87A27]/10 transition-colors">
+          <button className="hidden sm:block px-6 py-2.5 rounded-full border border-brand text-white text-sm font-medium hover:bg-brand/10 transition-colors">
             Talk to us
           </button>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-[#E87A27] text-white hover:bg-[#D97736] transition-colors"
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-brand text-white hover:bg-brand-strong transition-colors"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -62,7 +62,7 @@ export default function Navbar() {
               </div>
 
               <div>
-                <p className="text-[#E87A27] text-xs tracking-[0.2em] font-medium uppercase mb-4">
+                <p className="text-brand text-xs tracking-[0.2em] font-medium uppercase mb-4">
                   Get In Touch
                 </p>
                 <h2 className="text-black text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight mb-2">
@@ -80,19 +80,19 @@ export default function Navbar() {
                 <div className="flex justify-center md:justify-start space-x-4">
                   <Link
                     href="#"
-                    className="w-12 h-12 rounded-full border border-[#E87A27] text-[#E87A27] flex items-center justify-center hover:bg-[#E87A27] hover:text-white transition-colors"
+                    className="w-12 h-12 rounded-full border border-brand text-brand flex items-center justify-center hover:bg-brand hover:text-white transition-colors"
                   >
                     <Facebook className="w-5 h-5" />
                   </Link>
                   <Link
                     href="#"
-                    className="w-12 h-12 rounded-full border border-[#E87A27] text-[#E87A27] flex items-center justify-center hover:bg-[#E87A27] hover:text-white transition-colors"
+                    className="w-12 h-12 rounded-full border border-brand text-brand flex items-center justify-center hover:bg-brand hover:text-white transition-colors"
                   >
                     <Instagram className="w-5 h-5" />
                   </Link>
                   <Link
                     href="#"
-                    className="w-12 h-12 rounded-full border border-[#E87A27] text-[#E87A27] flex items-center justify-center hover:bg-[#E87A27] hover:text-white transition-colors"
+                    className="w-12 h-12 rounded-full border border-brand text-brand flex items-center justify-center hover:bg-brand hover:text-white transition-colors"
                   >
                     <Linkedin className="w-5 h-5" />
                   </Link>
@@ -115,7 +115,7 @@ export default function Navbar() {
                 <Link
                   key={item}
                   href="#"
-                  className="text-black text-6xl md:text-7xl lg:text-8xl font-black lowercase hover:text-[#E87A27] transition-colors leading-none tracking-tighter"
+                  className="text-black text-6xl md:text-7xl lg:text-8xl font-black lowercase hover:text-brand transition-colors leading-none tracking-tighter"
                   onClick={() => setIsOpen(false)}
                 >
                   {item === "About Us" ? "about us" : item}
@@ -127,7 +127,7 @@ export default function Navbar() {
             <div className="absolute bottom-0 right-0 hidden md:block">
               <Link
                 href="tel:+94719563675"
-                className="w-16 h-16 rounded-full bg-[#E87A27] text-white flex items-center justify-center hover:bg-[#D97736] transition-colors shadow-lg"
+                className="w-16 h-16 rounded-full bg-brand text-white flex items-center justify-center hover:bg-brand-strong transition-colors shadow-lg"
               >
                 <Phone className="w-6 h-6" />
               </Link>

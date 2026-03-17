@@ -23,7 +23,9 @@ export const metadata: Metadata = {
       { url: "/favicon.ico" },
     ],
     shortcut: ["/favicon.ico"],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
     other: [
       {
         rel: "android-chrome",
