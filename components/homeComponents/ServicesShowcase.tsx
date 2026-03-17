@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 type Service = {
-  id: string;
+  path: string;
   title: string;
   subtitle: string;
   description: string;
@@ -15,28 +15,28 @@ type Service = {
 
 const services: Service[] = [
   {
-    id: "alchem-it",
+    path: "/services/development",
     title: "Development",
     subtitle: "Web & Mobile",
     description: "Web & Mobile solutions without limits.",
     image: "/Alchemy logo ai-01.png",
   },
   {
-    id: "alchemy-av",
+    path: "/services/production",
     title: "Production",
     subtitle: "Audio & Visual",
     description: "Bring Your Ideas to Life on\nScreen.",
     image: "/Alchemy logo ai-02.png",
   },
   {
-    id: "alchemy-dm",
+    path: "/services/marketing",
     title: "Marketing",
     subtitle: "Digital",
     description: "Connect. Engage.\nGrow.",
     image: "/Alchemy logo ai-01.png",
   },
   {
-    id: "alchemy-events",
+    path: "/services/management",
     title: "Management",
     subtitle: "Event",
     description: "Designing seamless,\nmemorable events.",
@@ -45,7 +45,7 @@ const services: Service[] = [
 ];
 
 export default function ServicesShowcase() {
-  const [active, setActive] = useState<string>("alchem-it");
+  const [activePath, setActivePath] = useState<string>("/services/development");
   const [isNavigating, setIsNavigating] = useState(false);
   const router = useRouter();
   const navigationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
@@ -53,7 +53,7 @@ export default function ServicesShowcase() {
   );
 
   const currentService =
-    services.find((service) => service.id === active) ?? services[0];
+    services.find((service) => service.path === activePath) ?? services[0];
 
   useEffect(() => {
     return () => {
@@ -63,7 +63,7 @@ export default function ServicesShowcase() {
     };
   }, []);
 
-  const handleNavigate = (serviceId: string) => {
+  const handleNavigate = (servicePath: string) => {
     if (isNavigating) {
       return;
     }
@@ -75,7 +75,7 @@ export default function ServicesShowcase() {
         clearTimeout(navigationTimeoutRef.current);
       }
 
-      router.push(`/services/${serviceId}`);
+      router.push(servicePath);
 
       navigationTimeoutRef.current = setTimeout(() => {
         setIsNavigating(false);
@@ -83,7 +83,7 @@ export default function ServicesShowcase() {
     } catch (error) {
       console.error("Navigation error:", error);
       setIsNavigating(false);
-      setActive(serviceId);
+      setActivePath(servicePath);
     }
   };
 
@@ -98,9 +98,9 @@ export default function ServicesShowcase() {
           <div className="space-y-4 md:space-y-6">
             {services.map((service) => (
               <div
-                key={service.id}
-                onMouseEnter={() => !isNavigating && setActive(service.id)}
-                onClick={() => !isNavigating && handleNavigate(service.id)}
+                key={service.path}
+                onMouseEnter={() => !isNavigating && setActivePath(service.path)}
+                onClick={() => !isNavigating && handleNavigate(service.path)}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(event) => {
@@ -109,7 +109,7 @@ export default function ServicesShowcase() {
                   }
                   if (event.key === "Enter" || event.key === " ") {
                     event.preventDefault();
-                    handleNavigate(service.id);
+                    handleNavigate(service.path);
                   }
                 }}
                 className={`cursor-pointer transition-all duration-300 ${
@@ -128,7 +128,7 @@ export default function ServicesShowcase() {
 
                     <p
                       className={`hidden pl-4 text-sm font-semibold transition-all duration-300 md:pl-12 lg:block ${
-                        active === service.id ? "text-white" : "text-gray-500"
+                        activePath === service.path ? "text-white" : "text-gray-500"
                       }`}
                     >
                       {service.subtitle}
@@ -146,7 +146,7 @@ export default function ServicesShowcase() {
 
                         <h2
                           className={`hidden font-bold transition-all duration-300 lg:block ${
-                            active === service.id
+                            activePath === service.path
                               ? "text-3xl text-white lg:text-4xl xl:text-7xl"
                               : "text-3xl text-gray-500 lg:text-3xl xl:text-6xl"
                           }`}
@@ -158,7 +158,7 @@ export default function ServicesShowcase() {
                       <motion.button
                         onClick={(event) => {
                           event.stopPropagation();
-                          handleNavigate(service.id);
+                          handleNavigate(service.path);
                         }}
                         disabled={isNavigating}
                         className="group mr-12 block shrink-0 rounded-full bg-linear-to-r from-[#E2791D] to-orange-600 p-3 shadow-lg transition-all duration-300 hover:shadow-xl active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 md:hidden"
@@ -197,7 +197,7 @@ export default function ServicesShowcase() {
 
         <div className="my-10 mt-0 flex w-full justify-center md:mt-32.5 md:w-1/2 lg:mt-30 xl:mt-32.5">
           <motion.div
-            key={currentService.id}
+            key={currentService.path}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -20 }}

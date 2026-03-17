@@ -6,7 +6,9 @@ export default function Home() {
   return (
     <>
       <HeroAlchemy />
-      <ServicesShowcase />
+      <section id="services">
+        <ServicesShowcase />
+      </section>
       <HeroScrollVideo
         media="/Showreel.webm"
         title="UNSEEN VISUAL SHOWCASE"
