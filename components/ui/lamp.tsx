@@ -6,21 +6,73 @@ import { cn } from "@/lib/utils";
 export const LampContainer = ({
   children,
   className,
+  translateY = "-0.65",
 }: {
   children: React.ReactNode;
   className?: string;
+  translateY?: string;
 }) => {
   return (
     <div
       className={cn(
-        "relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black w-full rounded-md z-0",
+        "hero-lamp-container relative flex min-h-[60vh] xs:min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh] lg:min-h-screen flex-col items-center justify-center overflow-hidden bg-black w-full rounded-md z-0 lg:pt-24",
         className
       )}
     >
-      <div className="relative flex w-full flex-1 scale-y-125 items-center justify-center isolate z-0 ">
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+          .hero-lamp-container {
+            --lamp-width: 10rem;
+            --lamp-width-expanded: 16rem;
+            --lamp-height: 6rem;
+            --glow-size: 12rem;
+            --blur-size: 24px;
+            --font-size: clamp(4.5rem, 12vw, 28rem);
+          }
+          @media (min-width: 475px) {
+            .hero-lamp-container {
+              --lamp-width: 12rem;
+              --lamp-width-expanded: 20rem;
+              --lamp-height: 8rem;
+              --glow-size: 16rem;
+              --blur-size: 32px;
+            }
+          }
+          @media (min-width: 640px) {
+            .hero-lamp-container {
+              --lamp-width: 14rem;
+              --lamp-width-expanded: 24rem;
+              --lamp-height: 10rem;
+              --glow-size: 20rem;
+              --blur-size: 36px;
+            }
+          }
+          @media (min-width: 768px) {
+            .hero-lamp-container {
+              --lamp-width: 15rem;
+              --lamp-width-expanded: 30rem;
+              --lamp-height: 14rem;
+              --glow-size: 28rem;
+              --blur-size: 48px;
+              --font-size: 9rem;
+            }
+          }
+          @media (min-width: 1024px) {
+            .hero-lamp-container {
+              --font-size: clamp(4.5rem, 12vw, 28rem);
+            }
+          }
+        `,
+        }}
+      />
+      <div
+        className="relative flex w-full flex-1 scale-y-125 items-center justify-center isolate z-0"
+        style={{ transform: "translateY(calc(var(--lamp-height) * 0.62))" }}
+      >
         <motion.div
-          initial={{ opacity: 0.5, width: "15rem" }}
-          whileInView={{ opacity: 1, width: "30rem" }}
+          initial={{ opacity: 0.5, width: "var(--lamp-width)" }}
+          whileInView={{ opacity: 1, width: "var(--lamp-width-expanded)" }}
           transition={{
             delay: 0.3,
             duration: 0.8,
@@ -28,56 +80,181 @@ export const LampContainer = ({
           }}
           style={{
             backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))`,
+            position: "absolute",
+            inset: "auto",
+            right: "50%",
+            height: "var(--lamp-height)",
+            overflow: "visible",
+            width: "var(--lamp-width-expanded)",
+            background:
+              "conic-gradient(from 70deg at center top, #ff8c00, transparent, transparent)",
+            color: "white",
           }}
-          className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-orange-500 via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top]"
         >
-          <div className="absolute  w-[100%] left-0 bg-black h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" />
-          <div className="absolute  w-40 h-[100%] left-0 bg-black  bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" />
+          <div
+            style={{
+              position: "absolute",
+              width: "100%",
+              left: 0,
+              backgroundColor: "#000000",
+              height: "calc(var(--lamp-height) * 0.7)",
+              bottom: 0,
+              zIndex: 20,
+              maskImage: "linear-gradient(to top, white, transparent)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              width: "calc(var(--lamp-height) * 0.7)",
+              height: "100%",
+              left: 0,
+              backgroundColor: "#000000",
+              bottom: 0,
+              zIndex: 20,
+              maskImage: "linear-gradient(to right, white, transparent)",
+            }}
+          />
         </motion.div>
         <motion.div
-          initial={{ opacity: 0.5, width: "15rem" }}
-          whileInView={{ opacity: 1, width: "30rem" }}
+          initial={{ opacity: 0.5, width: "var(--lamp-width)" }}
+          whileInView={{ opacity: 1, width: "var(--lamp-width-expanded)" }}
           transition={{
             delay: 0.3,
             duration: 0.8,
             ease: "easeInOut",
           }}
           style={{
-            backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))`,
+            position: "absolute",
+            inset: "auto",
+            left: "50%",
+            height: "var(--lamp-height)",
+            width: "var(--lamp-width-expanded)",
+            background:
+              "conic-gradient(from 290deg at center top, transparent, transparent, #ff8c00)",
+            color: "white",
           }}
-          className="absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-orange-500 text-white [--conic-position:from_290deg_at_center_top]"
         >
-          <div className="absolute  w-40 h-[100%] right-0 bg-black  bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" />
-          <div className="absolute  w-[100%] right-0 bg-black h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" />
+          <div
+            style={{
+              position: "absolute",
+              width: "calc(var(--lamp-height) * 0.7)",
+              height: "100%",
+              right: 0,
+              backgroundColor: "#000000",
+              bottom: 0,
+              zIndex: 20,
+              maskImage: "linear-gradient(to left, white, transparent)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              width: "100%",
+              right: 0,
+              backgroundColor: "#000000",
+              height: "calc(var(--lamp-height) * 0.7)",
+              bottom: 0,
+              zIndex: 20,
+              maskImage: "linear-gradient(to top, white, transparent)",
+            }}
+          />
         </motion.div>
-        <div className="absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 bg-black blur-2xl"></div>
-        <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent opacity-10 backdrop-blur-md"></div>
-        <div className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full bg-orange-500 opacity-50 blur-3xl"></div>
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            height: "calc(var(--lamp-height) * 0.85)",
+            width: "100%",
+            transform: "translateY(12px) scaleX(1.5)",
+            backgroundColor: "#000000",
+            filter: "blur(32px)",
+          }}
+        ></div>
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            zIndex: 50,
+            height: "calc(var(--lamp-height) * 0.85)",
+            width: "100%",
+            backgroundColor: "transparent",
+            opacity: 0.1,
+            backdropFilter: "blur(8px)",
+          }}
+        ></div>
+        <div
+          style={{
+            position: "absolute",
+            inset: "auto",
+            zIndex: 50,
+            height: "calc(var(--lamp-height) * 0.64)",
+            width: "var(--glow-size)",
+            transform: "translateY(-50%)",
+            borderRadius: "50%",
+            backgroundColor: "#ff8c00",
+            opacity: 0.5,
+            filter: "blur(var(--blur-size))",
+          }}
+        ></div>
         <motion.div
-          initial={{ width: "8rem" }}
-          whileInView={{ width: "16rem" }}
+          initial={{ width: "calc(var(--lamp-width) * 0.53)" }}
+          whileInView={{ width: "calc(var(--lamp-width-expanded) * 0.53)" }}
           transition={{
             delay: 0.3,
             duration: 0.8,
             ease: "easeInOut",
           }}
-          className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full bg-orange-400 blur-2xl"
+          style={{
+            position: "absolute",
+            inset: "auto",
+            zIndex: 30,
+            height: "calc(var(--lamp-height) * 0.64)",
+            width: "calc(var(--lamp-width-expanded) * 0.53)",
+            transform: "translateY(calc(var(--lamp-height) * -0.43))",
+            borderRadius: "50%",
+            backgroundColor: "#ffa500",
+            filter: "blur(32px)",
+          }}
         ></motion.div>
         <motion.div
-          initial={{ width: "15rem" }}
-          whileInView={{ width: "30rem" }}
+          initial={{ width: "var(--lamp-width)" }}
+          whileInView={{ width: "var(--lamp-width-expanded)" }}
           transition={{
             delay: 0.3,
             duration: 0.8,
             ease: "easeInOut",
           }}
-          className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem] bg-orange-400 "
+          style={{
+            position: "absolute",
+            inset: "auto",
+            zIndex: 50,
+            height: "2px",
+            width: "var(--lamp-width-expanded)",
+            transform: "translateY(calc(var(--lamp-height) * -0.5))",
+            backgroundColor: "#ff8c00",
+          }}
         ></motion.div>
 
-        <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem] bg-black "></div>
+        <div
+          style={{
+            position: "absolute",
+            inset: "auto",
+            zIndex: 40,
+            height: "calc(var(--lamp-height) * 0.78)",
+            width: "100%",
+            transform: "translateY(calc(var(--lamp-height) * -0.89))",
+            backgroundColor: "#000000",
+          }}
+        ></div>
       </div>
 
-      <div className="relative z-50 flex -translate-y-80 flex-col items-center px-5">
+      <div
+        className="relative z-50 flex flex-col items-center px-5"
+        style={{
+          transform: `translateY(calc(var(--lamp-height) * ${translateY}))`,
+        }}
+      >
         {children}
       </div>
     </div>
