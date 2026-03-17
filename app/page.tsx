@@ -1,5 +1,5 @@
-import HeroAlchemy from "@/components/HeroComponents/HeroAlchemy";
-import ServicesShowcase from "@/components/ServicesShowcase";
+import HeroAlchemy from "@/components/homeComponents/HeroAlchemy";
+import ServicesShowcase from "@/components/homeComponents/ServicesShowcase";
 
 export default function Home() {
   return (
