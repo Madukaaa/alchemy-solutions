@@ -27,17 +27,19 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-[60] flex items-center justify-between px-6 md:px-12 py-6 bg-transparent ${poppins.className}`}>
-      {/* Logo */}
-      <Link href="/" className="flex items-center">
-        <Image 
-          src="/Alchemy logo ai-02.png" 
-          alt="Alchemy Logo" 
-          width={120} 
-          height={40} 
-          className="object-contain"
-        />
-      </Link>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-60 flex items-center justify-between px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24 2xl:px-32 py-6 bg-transparent ${poppins.className}`}
+      >
+        {/* Logo */}
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/Alchemy logo ai-02.png"
+            alt="Alchemy Logo"
+            width={105}
+            height={35}
+            className="object-contain"
+          />
+        </Link>
 
       {/* Right side actions */}
       <div className="flex items-center space-x-6">
@@ -53,10 +55,15 @@ export default function Navbar() {
           aria-expanded={isOpen}
           className="w-12 h-12 flex items-center justify-center rounded-full bg-[#E87A27] text-white hover:bg-[#D97736] transition-colors"
         >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
-    </nav>
+          {/* Left Side: Contact & Info */}
+          <div className="w-full md:w-1/2 flex flex-col justify-between border-r border-gray-200 pr-0 md:pr-12 md:max-h-[70vh] my-auto">
+            <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-8">
+              {/* Placeholder for Robot Image */}
+              <div className="w-48 h-48 bg-gray-100 rounded-3xl flex items-center justify-center mb-8 md:flex">
+                <span className="text-gray-400 text-sm">
+                  Robot Image Placeholder
+                </span>
+              </div>
 
     {/* Fullscreen Overlay */}
     <div 
@@ -107,7 +114,6 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-        </div>
 
         {/* Right Side: Navigation Links */}
         <div className="w-full md:w-1/2 flex flex-col justify-center pl-0 md:pl-24 mt-12 md:mt-0 relative">
@@ -124,7 +130,6 @@ export default function Navbar() {
             ))}
           </nav>
         </div>
-
       </div>
     </div>
 
