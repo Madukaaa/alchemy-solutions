@@ -15,6 +15,7 @@ const poppins = Poppins({
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   const navItems = [
     { label: "Home", href: "/" },
@@ -24,6 +25,18 @@ export default function Navbar() {
     { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
   ];
+
+  const openMenu = () => {
+    setIsClosing(false);
+    setIsOpen(true);
+  };
+
+  const closeMenu = () => {
+    setIsClosing(true);
+    setIsOpen(false);
+  };
+
+  const isMenuVisible = isOpen || isClosing;
 
   return (
     <>
@@ -45,17 +58,23 @@ export default function Navbar() {
         <div className="flex items-center space-x-6">
           <Link
             href="/contact"
-            className="hidden sm:block px-6 py-2.5 rounded-full border border-[#E87A27] text-white text-sm font-medium hover:bg-[#E87A27]/10 transition-colors"
+            className={`${
+              isMenuVisible ? "hidden" : "hidden sm:block"
+            } px-6 py-2.5 rounded-full border border-[#E87A27] text-white text-sm font-medium hover:bg-[#E87A27]/10 transition-colors`}
           >
             Talk to us
           </Link>
           <button
-            onClick={() => setIsOpen((prev) => !prev)}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isOpen}
+            onClick={() => (isOpen ? closeMenu() : openMenu())}
+            aria-label={isMenuVisible ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuVisible}
             className="w-12 h-12 flex items-center justify-center rounded-full bg-[#E87A27] text-white hover:bg-[#D97736] transition-colors"
           >
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isMenuVisible ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </button>
         </div>
       </nav>
@@ -63,15 +82,20 @@ export default function Navbar() {
       {/* Fullscreen Overlay */}
       <div
         aria-hidden={!isOpen}
-        className={`fixed inset-0 z-50 bg-white overflow-hidden transition-[clip-path,opacity] duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] ${
+        onTransitionEnd={(event) => {
+          if (event.propertyName === "clip-path" && !isOpen) {
+            setIsClosing(false);
+          }
+        }}
+        className={`fixed inset-0 z-50 bg-white overflow-hidden transition-[clip-path] duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] ${
           isOpen
-            ? "[clip-path:inset(0_0_0_0%)] opacity-100 pointer-events-auto"
-            : "[clip-path:inset(0_0_0_100%)] opacity-0 pointer-events-none"
+            ? "[clip-path:inset(0_0_0_0%)] pointer-events-auto"
+            : "[clip-path:inset(0_0_0_100%)] pointer-events-none"
         }`}
       >
         <div
-          className={`flex flex-col md:flex-row h-full w-full pt-32 pl-6 pr-6 md:pl-32 md:pr-20 lg:pl-40 lg:pr-24 pb-12 transition-all duration-500 ease-out ${
-            isOpen ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"
+          className={`flex flex-col md:flex-row h-full w-full pt-32 pl-6 pr-6 md:pl-32 md:pr-20 lg:pl-40 lg:pr-24 pb-12 transition-transform duration-500 ease-out ${
+            isOpen ? "translate-x-0" : "translate-x-8"
           } ${poppins.className}`}
         >
           {/* Left Side: Contact & Info */}
@@ -135,19 +159,19 @@ export default function Navbar() {
                   key={item.label}
                   href={item.href}
                   className="text-black text-6xl md:text-7xl lg:text-7xl font-black transition-colors leading-none tracking-wide"
-                  onClick={() => setIsOpen(false)}
+                  onClick={closeMenu}
                 >
                   <HoverAnimatedText text={item.label} />
                 </Link>
               ))}
             </nav>
+
+            <div className="mt-10 flex justify-end pr-2 md:pr-4">
+              <FloatingCallButton className="static! h-14! w-14! md:h-16! md:w-16!" />
+            </div>
           </div>
         </div>
       </div>
-
-      {isOpen && (
-        <FloatingCallButton className="bottom-6 right-6 md:bottom-10 md:right-12" />
-      )}
     </>
   );
 }

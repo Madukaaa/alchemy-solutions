@@ -1,11 +1,31 @@
 import HeroAlchemy from "@/components/homeComponents/HeroAlchemy";
 import ServicesShowcase from "@/components/homeComponents/ServicesShowcase";
+import { HeroScrollVideo } from "@/components/ui/scroll-animated-video";
 
 export default function Home() {
   return (
     <>
       <HeroAlchemy />
       <ServicesShowcase />
+      <HeroScrollVideo
+        media="/Showreel.webm"
+        title="UNSEEN VISUAL SHOWCASE"
+        subtitle="SHOWREEL"
+        meta="2025"
+        overlay={{
+          heading: "Future- Forward",
+          paragraphs: [
+            "Building tomorrow's digital landscape today.",
+            "We blend cutting-edge development with strategic marketing to create ecosystems where brands don't just exist-they evolve, adapt, and dominate their space.",
+          ],
+        }}
+        credits={
+          <>
+            <p>Crafted by</p>
+            <p>Alchemy</p>
+          </>
+        }
+      />
     </>
   );
 }

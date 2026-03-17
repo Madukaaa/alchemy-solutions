@@ -26,7 +26,7 @@ export default function FloatingCallButton({
       aria-label={ariaLabel}
       onClick={handleCall}
       className={cn(
-        "fixed bottom-4 right-4 z-[60] h-14 w-14 md:bottom-10 md:right-10 md:h-16 md:w-16",
+        "fixed bottom-4 right-4 z-60 h-14 w-14 md:bottom-10 md:right-10 md:h-16 md:w-16",
         "flex items-center justify-center rounded-full shadow-lg",
         "bg-orange-500 text-white transition-all duration-300 hover:bg-black",
         "hover:ring-4 hover:ring-orange-300",
