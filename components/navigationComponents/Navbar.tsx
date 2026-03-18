@@ -17,6 +17,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [useLightLogo, setUseLightLogo] = useState(false);
+  const [isHiddenByGallery, setIsHiddenByGallery] = useState(false);
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const logoRef = useRef<HTMLAnchorElement | null>(null);
 
@@ -50,7 +51,9 @@ export default function Navbar() {
     }
 
     const clipPath = window.getComputedStyle(overlayEl).clipPath;
-    const insetMatch = clipPath.match(/^inset\(([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s\)]+)\)/);
+    const insetMatch = clipPath.match(
+      /^inset\(([^\s]+)\s+([^\s]+)\s+([^\s]+)\s+([^\s\)]+)\)/,
+    );
 
     if (!insetMatch) {
       return;
@@ -94,15 +97,40 @@ export default function Navbar() {
     };
   }, [isMenuVisible, updateLogoByCurtainPosition]);
 
+  useEffect(() => {
+    const handleGalleryExpandedChange = (event: Event) => {
+      const customEvent = event as CustomEvent<{ expanded?: boolean }>;
+      const expanded = Boolean(customEvent.detail?.expanded);
+      setIsHiddenByGallery(expanded);
+
+      if (expanded) {
+        setIsOpen(false);
+        setIsClosing(false);
+      }
+    };
+
+    window.addEventListener("gallery:expanded-change", handleGalleryExpandedChange);
+    return () => {
+      window.removeEventListener(
+        "gallery:expanded-change",
+        handleGalleryExpandedChange,
+      );
+    };
+  }, []);
+
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-60 flex items-center justify-between px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24 2xl:px-32 py-6 bg-transparent ${poppins.className}`}
+        className={`fixed top-0 left-0 right-0 z-60 flex items-center justify-between px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24 2xl:px-32 py-6 bg-transparent transition-opacity duration-200 ${isHiddenByGallery ? "pointer-events-none opacity-0" : "opacity-100"} ${poppins.className}`}
       >
         {/* Logo */}
         <Link href="/" className="flex items-center" ref={logoRef}>
           <Image
-            src={useLightLogo ? "/Alchemy logo ai-01.png" : "/Alchemy logo ai-02.png"}
+            src={
+              useLightLogo
+                ? "/Alchemy logo ai-01.png"
+                : "/Alchemy logo ai-02.png"
+            }
             alt="Alchemy Logo"
             width={105}
             height={35}
@@ -145,7 +173,7 @@ export default function Navbar() {
           }
         }}
         className={`fixed inset-0 z-50 bg-white overflow-hidden transition-[clip-path] duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] ${
-          isOpen
+          !isHiddenByGallery && isOpen
             ? "[clip-path:inset(0_0_0_0%)] pointer-events-auto"
             : "[clip-path:inset(0_0_0_100%)] pointer-events-none"
         }`}
