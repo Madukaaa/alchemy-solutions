@@ -96,38 +96,38 @@ export default function TeamSection() {
         const docs = await listTeamMembers();
 
         const remoteMembers = docs.reduce<TeamMember[]>((acc, doc) => {
-            const record = doc as Record<string, unknown>;
+          const record = doc as Record<string, unknown>;
 
-            const id = toText(record.id);
-            const name =
-              toText(record.name) ??
-              toText(record.fullName) ??
-              toText(record.memberName);
-            const role =
-              toText(record.role) ??
-              toText(record.designation) ??
-              toText(record.title);
-            const img =
-              toText(record.img) ??
-              toText(record.image) ??
-              toText(record.imageUrl) ??
-              toText(record.photoUrl);
+          const id = toText(record.id);
+          const name =
+            toText(record.name) ??
+            toText(record.fullName) ??
+            toText(record.memberName);
+          const role =
+            toText(record.role) ??
+            toText(record.designation) ??
+            toText(record.title);
+          const img =
+            toText(record.img) ??
+            toText(record.image) ??
+            toText(record.imageUrl) ??
+            toText(record.photoUrl);
 
-            if (!name || !role) {
-              return acc;
-            }
-
-            acc.push({
-              ...(id ? { id } : {}),
-              name,
-              role,
-              img,
-              position: toNumber(record.position),
-              createdAt: toNumber(record.createdAt),
-            });
-
+          if (!name || !role) {
             return acc;
-          }, []);
+          }
+
+          acc.push({
+            ...(id ? { id } : {}),
+            name,
+            role,
+            img,
+            position: toNumber(record.position),
+            createdAt: toNumber(record.createdAt),
+          });
+
+          return acc;
+        }, []);
 
         const nextMembers =
           remoteMembers.length > 0 ? remoteMembers : TEAM_MEMBERS;

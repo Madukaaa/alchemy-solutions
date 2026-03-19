@@ -161,7 +161,8 @@ export default function Navbar() {
     };
   }, []);
 
-  const shouldHideNavbar = isHiddenByGallery || (isHiddenByScroll && !isMenuVisible);
+  const shouldHideNavbar =
+    isHiddenByGallery || (isHiddenByScroll && !isMenuVisible);
 
   return (
     <>

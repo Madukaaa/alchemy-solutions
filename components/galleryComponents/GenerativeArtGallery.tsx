@@ -10,6 +10,7 @@ import {
   type Variants,
 } from "framer-motion";
 import { ArrowUpRight, X } from "lucide-react";
+import { listGallery } from "@/lib/firestoreHelpers";
 
 type GalleryItem = {
   id?: string;
@@ -64,22 +65,57 @@ const GALLERY_ITEMS: GalleryItem[] = [
   },
 ];
 
-const DESIRED_GALLERY_SIZE = 21;
+const FALLBACK_GALLERY_ITEMS: GalleryItem[] = GALLERY_ITEMS;
 
-const BUILD_GALLERY_ITEMS: GalleryItem[] = Array.from(
-  { length: DESIRED_GALLERY_SIZE },
-  (_, index) => {
-    const source = GALLERY_ITEMS[index % GALLERY_ITEMS.length];
-    const sequence = String(index + 1).padStart(2, "0");
+type FirestoreGalleryDoc = {
+  id?: string;
+  title?: string;
+  alt?: string;
+  image?: string;
+  imageUrl?: string;
+  url?: string;
+  secure_url?: string;
+  src?: string;
+  mainImage?: string | { secure_url?: string; url?: string };
+  name?: string;
+  caption?: string;
+};
 
-    return {
-      id: `gallery-${sequence}`,
-      image: source.image,
-      title: `Alchemy Image ${sequence}`,
-      alt: `Alchemy gallery image ${sequence}`,
-    };
-  },
-);
+const pickString = (value: unknown) =>
+  typeof value === "string" && value.trim().length > 0 ? value.trim() : undefined;
+
+const resolveImageUrl = (item: FirestoreGalleryDoc) => {
+  if (typeof item.mainImage === "string") {
+    return pickString(item.mainImage);
+  }
+
+  if (item.mainImage && typeof item.mainImage === "object") {
+    return pickString(item.mainImage.secure_url) || pickString(item.mainImage.url);
+  }
+
+  return (
+    pickString(item.imageUrl) ||
+    pickString(item.image) ||
+    pickString(item.url) ||
+    pickString(item.secure_url) ||
+    pickString(item.src)
+  );
+};
+
+const normalizeGalleryItem = (item: FirestoreGalleryDoc, index: number): GalleryItem | null => {
+  const imageUrl = resolveImageUrl(item);
+  if (!imageUrl) return null;
+
+  const label = pickString(item.title) || pickString(item.name) || pickString(item.caption);
+  const title = label || `Gallery Image ${index + 1}`;
+
+  return {
+    id: pickString(item.id) || `gallery-${index + 1}`,
+    imageUrl,
+    title,
+    alt: pickString(item.alt) || title,
+  };
+};
 
 const disableScroll = () => {
   const scrollBarWidth =
@@ -347,12 +383,42 @@ type GenerativeArtGalleryProps = {
 const GenerativeArtGallery = ({
   onExpandChange,
 }: GenerativeArtGalleryProps) => {
-  const [expandedItem, setExpandedItem] = React.useState<GalleryItem | null>(
-    null,
-  );
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [currentIndex, setCurrentIndex] = React.useState(0);
-  const [galleryItems] = React.useState<GalleryItem[]>(BUILD_GALLERY_ITEMS);
+  const [galleryItems, setGalleryItems] = React.useState<GalleryItem[]>([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    let isMounted = true;
+
+    const loadGallery = async () => {
+      try {
+        const docs = (await listGallery()) as FirestoreGalleryDoc[];
+        if (!isMounted) return;
+
+        const normalized = docs
+          .map((item, index) => normalizeGalleryItem(item, index))
+          .filter((item): item is GalleryItem => item !== null);
+
+        setGalleryItems(normalized.length ? normalized : FALLBACK_GALLERY_ITEMS);
+      } catch (error) {
+        console.warn("Failed to load gallery from Firestore:", error);
+        if (isMounted) {
+          setGalleryItems(FALLBACK_GALLERY_ITEMS);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    loadGallery();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   React.useEffect(() => {
     notifyGalleryExpandedChange(isExpanded);
@@ -370,15 +436,12 @@ const GenerativeArtGallery = ({
     );
 
     setCurrentIndex(index >= 0 ? index : 0);
-    setExpandedItem(item);
     setIsExpanded(true);
   };
 
   const handleClose = () => {
     setIsExpanded(false);
-
     setTimeout(() => {
-      setExpandedItem(null);
       setCurrentIndex(0);
     }, 300);
   };
@@ -387,7 +450,11 @@ const GenerativeArtGallery = ({
     <>
       <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-black p-8 md:p-16">
         <div className="relative z-10 grid w-full max-w-6xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {galleryItems.length > 0 ? (
+          {isLoading ? (
+            <div className="col-span-full text-center text-gray-400">
+              Loading gallery images...
+            </div>
+          ) : galleryItems.length > 0 ? (
             galleryItems.map((item, index) => (
               <GalleryCard
                 key={item.id || item.imageUrl || index}
