@@ -1,6 +1,6 @@
-import ServicesHero from "@/components/service/ServiceHero";
-import ProductionIntro from "@/components/service/ProductionIntro";
-import YoutubeShowreel from "@/components/service/YoutubeShowreel";
+import ServicesHero from "@/components/servicesComponents/ServiceHero";
+import ProductionIntro from "@/components/servicesComponents/ProductionIntro";
+import YoutubeShowreel from "@/components/servicesComponents/YoutubeShowreel";
 
 export default function ProductionServicePage() {
   return (

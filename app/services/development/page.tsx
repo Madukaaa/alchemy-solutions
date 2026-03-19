@@ -1,6 +1,6 @@
 import Link from "next/link";
-import ServicesHero from "@/components/service/ServiceHero";
-import ExpertiseSection from "@/components/service/ExpertiseSection";
+import ServicesHero from "@/components/servicesComponents/ServiceHero";
+import ExpertiseSection from "@/components/servicesComponents/ExpertiseSection";
 
 export default function DevelopmentServicePage() {
   return (

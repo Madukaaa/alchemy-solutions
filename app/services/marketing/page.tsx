@@ -1,7 +1,7 @@
 import Link from "next/link";
-import ServicesHero from "@/components/service/ServiceHero";
-import ExpertiseSection from "@/components/service/ExpertiseSection";
-import YoutubeShowreel from "@/components/service/YoutubeShowreel";
+import ServicesHero from "@/components/servicesComponents/ServiceHero";
+import ExpertiseSection from "@/components/servicesComponents/ExpertiseSection";
+import YoutubeShowreel from "@/components/servicesComponents/YoutubeShowreel";
 
 export default function MarketingServicePage() {
   return ( 
