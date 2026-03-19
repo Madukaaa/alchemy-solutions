@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   addBlogPost,
   deleteBlogPost,
@@ -129,6 +130,7 @@ async function uploadToCloudinary(file: File, folder: string) {
 }
 
 export default function BlogAdminPage() {
+  const searchParams = useSearchParams();
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [date, setDate] = useState("");
@@ -144,6 +146,7 @@ export default function BlogAdminPage() {
   const [uploadingSectionId, setUploadingSectionId] = useState<number | null>(
     null,
   );
+  const [dashboardHref, setDashboardHref] = useState("/admin/admin-dashboard");
 
   const dragRef = useRef<DragState>({
     dragging: false,
@@ -166,6 +169,22 @@ export default function BlogAdminPage() {
   useEffect(() => {
     void load();
   }, []);
+
+  useEffect(() => {
+    const from = searchParams.get("from");
+    if (from === "mod") {
+      setDashboardHref("/admin/mod-dashboard");
+      return;
+    }
+
+    if (typeof window !== "undefined") {
+      const isModeratorSession =
+        window.localStorage.getItem("alchemy_mod_auth") === "true";
+      setDashboardHref(
+        isModeratorSession ? "/admin/mod-dashboard" : "/admin/admin-dashboard",
+      );
+    }
+  }, [searchParams]);
 
   async function load() {
     setLoading(true);
@@ -402,7 +421,7 @@ export default function BlogAdminPage() {
     >
       <div className="flex justify-between items-center mb-4">
         <Link
-          href="/admin/admin-dashboard"
+          href={dashboardHref}
           className="px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded text-sm border border-gray-700"
         >
           Back to Dashboard

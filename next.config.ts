@@ -14,6 +14,26 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
       {
+        source: "/mod-login",
+        destination: "/admin/mod-login",
+        permanent: false,
+      },
+      {
+        source: "/mod-dashboard",
+        destination: "/admin/mod-dashboard",
+        permanent: false,
+      },
+      {
+        source: "/moderator-login",
+        destination: "/admin/mod-login",
+        permanent: false,
+      },
+      {
+        source: "/moderator-dashboard",
+        destination: "/admin/mod-dashboard",
+        permanent: false,
+      },
+      {
         source: "/blog-admin",
         destination: "/admin/blog-admin",
         permanent: false,

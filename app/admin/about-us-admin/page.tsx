@@ -173,7 +173,12 @@ export default function AboutUsAdminPage() {
   }
 
   async function swapPositions(idxA: number, idxB: number) {
-    if (idxA < 0 || idxB < 0 || idxA >= members.length || idxB >= members.length) {
+    if (
+      idxA < 0 ||
+      idxB < 0 ||
+      idxA >= members.length ||
+      idxB >= members.length
+    ) {
       return;
     }
 
@@ -341,7 +346,9 @@ export default function AboutUsAdminPage() {
                             <div className="ml-2 flex gap-1">
                               <button
                                 title="Move up"
-                                onClick={() => void swapPositions(index, index - 1)}
+                                onClick={() =>
+                                  void swapPositions(index, index - 1)
+                                }
                                 disabled={index === 0}
                                 className="rounded bg-gray-700 px-2 py-1 disabled:opacity-40"
                               >
@@ -349,7 +356,9 @@ export default function AboutUsAdminPage() {
                               </button>
                               <button
                                 title="Move down"
-                                onClick={() => void swapPositions(index, index + 1)}
+                                onClick={() =>
+                                  void swapPositions(index, index + 1)
+                                }
                                 disabled={index === members.length - 1}
                                 className="rounded bg-gray-700 px-2 py-1 disabled:opacity-40"
                               >
