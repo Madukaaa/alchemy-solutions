@@ -277,7 +277,9 @@ export default function GalleryAdminPage() {
                     )}
 
                     <div className="flex items-center justify-between gap-2">
-                      <div className="truncate text-sm text-gray-200">{title}</div>
+                      <div className="truncate text-sm text-gray-200">
+                        {title}
+                      </div>
                       <button
                         onClick={() => handleDelete(it.id)}
                         className="rounded border border-gray-700 px-2 py-1 text-sm"

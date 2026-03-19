@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
       {
+        source: "/about-us-admin",
+        destination: "/admin/about-us-admin",
+        permanent: false,
+      },
+      {
         source: "/admin",
         destination: "/admin/admin-login",
         permanent: false,
