@@ -1,6 +1,7 @@
 import GeneralHero from "@/components/homeComponents/GeneralHero";
 import AboutSection from "@/components/aboutComponents/AboutSection";
 import CountSection from "@/components/aboutComponents/CountSection";
+import TeamSection from "@/components/aboutComponents/TeamSection";
 
 export default function AboutUsPage() {
   return (
@@ -14,6 +15,7 @@ export default function AboutUsPage() {
       />
       <AboutSection />
       <CountSection />
+      <TeamSection />
     </>
   );
 }
