@@ -61,7 +61,7 @@ export default function AdminDashboardPage() {
     const isAuthed =
       window.localStorage.getItem("alchemy_admin_auth") === "true";
     if (!isAuthed) {
-      router.replace("/admin-login");
+      router.replace("/admin/admin-login");
       return;
     }
 
@@ -169,7 +169,7 @@ export default function AdminDashboardPage() {
       window.localStorage.removeItem("alchemy_admin_user");
       window.localStorage.removeItem("alchemy_admin_role");
     }
-    router.replace("/admin-login");
+    router.replace("/admin/admin-login");
   }
 
   const fmtTime = (d: Date) =>
@@ -279,13 +279,13 @@ export default function AdminDashboardPage() {
           <div className="text-sm text-gray-300 mb-3">Quick Actions</div>
           <div className="flex gap-2 flex-wrap">
             <Link
-              href="/blog-admin"
+              href="/admin/blog-admin"
               className="px-3 py-2 bg-[#E87A27] text-white rounded shadow-sm"
             >
               Manage Blogs
             </Link>
             <Link
-              href="/gallery-admin"
+              href="/admin/gallery-admin"
               className="px-3 py-2 bg-gray-700 text-white rounded border border-gray-700"
             >
               Manage Gallery
@@ -293,37 +293,37 @@ export default function AdminDashboardPage() {
             {role === "admin" && (
               <>
                 <Link
-                  href="/it-admin"
+                  href="/admin/it-admin"
                   className="px-3 py-2 bg-gray-700 text-white rounded border border-gray-700"
                 >
                   IT Projects
                 </Link>
                 <Link
-                  href="/featured-work-admin"
+                  href="/admin/featured-work-admin"
                   className="px-3 py-2 bg-gray-700 text-white rounded border border-gray-700"
                 >
                   Featured Work
                 </Link>
                 <Link
-                  href="/dome-gallery-admin"
+                  href="/admin/dome-gallery-admin"
                   className="px-3 py-2 bg-gray-700 text-white rounded border border-gray-700"
                 >
                   DM Gallery
                 </Link>
                 <Link
-                  href="/event-carousel-admin"
+                  href="/admin/event-carousel-admin"
                   className="px-3 py-2 bg-gray-700 text-white rounded border border-gray-700"
                 >
                   Event Carousel
                 </Link>
                 <Link
-                  href="/client-logos-admin"
+                  href="/admin/client-logos-admin"
                   className="px-3 py-2 bg-gray-700 text-white rounded border border-gray-700"
                 >
                   Client Logos
                 </Link>
                 <Link
-                  href="/careers-admin"
+                  href="/admin/careers-admin"
                   className="px-3 py-2 bg-gray-700 text-white rounded border border-gray-700"
                 >
                   Careers
@@ -336,19 +336,19 @@ export default function AdminDashboardPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Link
-          href="/blog-admin"
+          href="/admin/blog-admin"
           className="p-4 bg-gray-800 text-white rounded shadow hover:shadow-lg ring-1 ring-gray-700"
         >
           Blog Management
         </Link>
         <Link
-          href="/gallery-admin"
+          href="/admin/gallery-admin"
           className="p-4 bg-gray-800 text-white rounded shadow hover:shadow-lg ring-1 ring-gray-700"
         >
           Gallery Management
         </Link>
         <Link
-          href="/it-admin"
+          href="/admin/it-admin"
           className="p-4 bg-gray-800 text-white rounded shadow hover:shadow-lg ring-1 ring-gray-700"
         >
           IT Projects
@@ -356,31 +356,31 @@ export default function AdminDashboardPage() {
         {role === "admin" && (
           <>
             <Link
-              href="/featured-work-admin"
+              href="/admin/featured-work-admin"
               className="p-4 bg-gray-800 text-white rounded shadow hover:shadow-lg ring-1 ring-gray-700"
             >
               Featured Work Management
             </Link>
             <Link
-              href="/dome-gallery-admin"
+              href="/admin/dome-gallery-admin"
               className="p-4 bg-gray-800 text-white rounded shadow hover:shadow-lg ring-1 ring-gray-700"
             >
               Digital Marketing Gallery Management
             </Link>
             <Link
-              href="/event-carousel-admin"
+              href="/admin/event-carousel-admin"
               className="p-4 bg-gray-800 text-white rounded shadow hover:shadow-lg ring-1 ring-gray-700"
             >
               Event Carousel Management
             </Link>
             <Link
-              href="/client-logos-admin"
+              href="/admin/client-logos-admin"
               className="p-4 bg-gray-800 text-white rounded shadow hover:shadow-lg ring-1 ring-gray-700"
             >
               Client Logos Management
             </Link>
             <Link
-              href="/careers-admin"
+              href="/admin/careers-admin"
               className="p-4 bg-gray-800 text-white rounded shadow hover:shadow-lg ring-1 ring-gray-700"
             >
               Careers Management
@@ -388,7 +388,7 @@ export default function AdminDashboardPage() {
           </>
         )}
         <Link
-          href="/about-us-admin"
+          href="/admin/about-us-admin"
           className="p-4 bg-gray-800 text-white rounded shadow hover:shadow-lg ring-1 ring-gray-700"
         >
           About Us / Team

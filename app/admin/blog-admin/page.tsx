@@ -11,7 +11,12 @@ import {
 } from "@/lib/firestoreHelpers";
 import { createUploadFormData, getCloudinaryUrl } from "@/lib/cloudinary";
 
-type SectionType = "heading" | "paragraph" | "bullet_list" | "numbered_list" | "image";
+type SectionType =
+  | "heading"
+  | "paragraph"
+  | "bullet_list"
+  | "numbered_list"
+  | "image";
 
 type ImageContent = {
   url: string;
@@ -40,7 +45,9 @@ type ToolbarPos = {
 
 function renderInlineFormatting(text: string) {
   if (!text) return "";
-  return text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>").replace(/\n/g, "<br/>");
+  return text
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\n/g, "<br/>");
 }
 
 function asStringArray(value: unknown): string[] {
@@ -66,13 +73,21 @@ function normalizeSection(raw: unknown, index: number): BlogSection {
     items?: unknown;
   };
 
-  const validType: SectionType[] = ["heading", "paragraph", "bullet_list", "numbered_list", "image"];
+  const validType: SectionType[] = [
+    "heading",
+    "paragraph",
+    "bullet_list",
+    "numbered_list",
+    "image",
+  ];
   const type = validType.includes(section.type as SectionType)
     ? (section.type as SectionType)
     : "paragraph";
 
   if (type === "image") {
-    const contentObj = section.content as { url?: string; secure_url?: string; alt?: string } | undefined;
+    const contentObj = section.content as
+      | { url?: string; secure_url?: string; alt?: string }
+      | undefined;
     return {
       id: typeof section.id === "number" ? section.id : fallbackId,
       type,
@@ -126,9 +141,15 @@ export default function BlogAdminPage() {
   const [loading, setLoading] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [mainImageUploading, setMainImageUploading] = useState(false);
-  const [uploadingSectionId, setUploadingSectionId] = useState<number | null>(null);
+  const [uploadingSectionId, setUploadingSectionId] = useState<number | null>(
+    null,
+  );
 
-  const dragRef = useRef<DragState>({ dragging: false, offsetX: 0, offsetY: 0 });
+  const dragRef = useRef<DragState>({
+    dragging: false,
+    offsetX: 0,
+    offsetY: 0,
+  });
   const [toolbarPos, setToolbarPos] = useState<ToolbarPos>(() => {
     if (typeof window === "undefined") {
       return { top: 80, left: 40 };
@@ -167,7 +188,9 @@ export default function BlogAdminPage() {
   }
 
   function updateSection(id: number, patch: Partial<BlogSection>) {
-    setSections((prev) => prev.map((s) => (s.id === id ? { ...s, ...patch } : s)));
+    setSections((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, ...patch } : s)),
+    );
   }
 
   function removeSection(id: number) {
@@ -291,15 +314,20 @@ export default function BlogAdminPage() {
 
   useEffect(() => {
     try {
-      window.localStorage.setItem("blogAdminToolbarPos", JSON.stringify(toolbarPos));
+      window.localStorage.setItem(
+        "blogAdminToolbarPos",
+        JSON.stringify(toolbarPos),
+      );
     } catch {
       // no-op
     }
   }, [toolbarPos]);
 
-  function startDrag(e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) {
-    const clientX = "touches" in e ? e.touches[0]?.clientX ?? 0 : e.clientX;
-    const clientY = "touches" in e ? e.touches[0]?.clientY ?? 0 : e.clientY;
+  function startDrag(
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
+  ) {
+    const clientX = "touches" in e ? (e.touches[0]?.clientX ?? 0) : e.clientX;
+    const clientY = "touches" in e ? (e.touches[0]?.clientY ?? 0) : e.clientY;
     const rect = e.currentTarget.getBoundingClientRect();
 
     dragRef.current.dragging = true;
@@ -327,7 +355,10 @@ export default function BlogAdminPage() {
     }
   }
 
-  async function onSectionImageChange(e: React.ChangeEvent<HTMLInputElement>, sectionId: number) {
+  async function onSectionImageChange(
+    e: React.ChangeEvent<HTMLInputElement>,
+    sectionId: number,
+  ) {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -371,7 +402,7 @@ export default function BlogAdminPage() {
     >
       <div className="flex justify-between items-center mb-4">
         <Link
-          href="/admin-dashboard"
+          href="/admin/admin-dashboard"
           className="px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded text-sm border border-gray-700"
         >
           Back to Dashboard
@@ -420,16 +451,24 @@ export default function BlogAdminPage() {
               </div>
 
               <div>
-                <label className="block text-sm text-gray-300 mb-2">Main Image</label>
+                <label className="block text-sm text-gray-300 mb-2">
+                  Main Image
+                </label>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={onMainImageChange}
                   className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-gray-700 file:text-white hover:file:bg-gray-600"
                 />
-                {mainImageUploading && <div className="text-sm text-gray-400 mt-2">Uploading...</div>}
+                {mainImageUploading && (
+                  <div className="text-sm text-gray-400 mt-2">Uploading...</div>
+                )}
                 {mainImageUrl && (
-                  <img src={mainImageUrl} alt="main" className="mt-2 w-48 rounded" />
+                  <img
+                    src={mainImageUrl}
+                    alt="main"
+                    className="mt-2 w-48 rounded"
+                  />
                 )}
               </div>
             </div>
@@ -456,7 +495,9 @@ export default function BlogAdminPage() {
                   {s.type === "heading" && (
                     <input
                       value={typeof s.content === "string" ? s.content : ""}
-                      onChange={(e) => updateSection(s.id, { content: e.target.value })}
+                      onChange={(e) =>
+                        updateSection(s.id, { content: e.target.value })
+                      }
                       placeholder="Heading text"
                       className="w-full p-2 bg-gray-700 text-white rounded"
                     />
@@ -465,7 +506,9 @@ export default function BlogAdminPage() {
                   {s.type === "paragraph" && (
                     <textarea
                       value={typeof s.content === "string" ? s.content : ""}
-                      onChange={(e) => updateSection(s.id, { content: e.target.value })}
+                      onChange={(e) =>
+                        updateSection(s.id, { content: e.target.value })
+                      }
                       placeholder="Write paragraph (use **bold** for bold)"
                       className="w-full p-2 bg-gray-700 text-white rounded min-h-25"
                     />
@@ -499,7 +542,9 @@ export default function BlogAdminPage() {
                       ))}
                       <button
                         type="button"
-                        onClick={() => updateSection(s.id, { items: [...s.items, ""] })}
+                        onClick={() =>
+                          updateSection(s.id, { items: [...s.items, ""] })
+                        }
                         className="px-2 py-1 bg-gray-700 rounded"
                       >
                         Add Item
@@ -516,17 +561,28 @@ export default function BlogAdminPage() {
                         className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-gray-700 file:text-white hover:file:bg-gray-600"
                       />
                       {uploadingSectionId === s.id && (
-                        <div className="text-sm text-gray-400 mt-2">Uploading...</div>
+                        <div className="text-sm text-gray-400 mt-2">
+                          Uploading...
+                        </div>
                       )}
                       {typeof s.content === "object" && s.content?.url && (
-                        <img src={s.content.url} alt={s.content.alt} className="mt-2 w-48 rounded" />
+                        <img
+                          src={s.content.url}
+                          alt={s.content.alt}
+                          className="mt-2 w-48 rounded"
+                        />
                       )}
                       <input
-                        value={typeof s.content === "object" ? s.content.alt : ""}
+                        value={
+                          typeof s.content === "object" ? s.content.alt : ""
+                        }
                         onChange={(e) =>
                           updateSection(s.id, {
                             content: {
-                              url: typeof s.content === "object" ? s.content.url : "",
+                              url:
+                                typeof s.content === "object"
+                                  ? s.content.url
+                                  : "",
                               alt: e.target.value,
                             },
                           })
@@ -559,13 +615,21 @@ export default function BlogAdminPage() {
           {showPreview && (
             <div className="bg-gray-800 text-white rounded p-4 ring-1 ring-gray-700">
               <h1 className="text-2xl font-bold mb-2">{title}</h1>
-              {subtitle && <h2 className="text-lg text-gray-300 mb-2">{subtitle}</h2>}
+              {subtitle && (
+                <h2 className="text-lg text-gray-300 mb-2">{subtitle}</h2>
+              )}
               <div className="text-sm text-gray-400 mb-4">
                 {date ? new Date(date).toLocaleDateString() : ""}
                 {author ? ` • ${author}` : ""}
                 {readTime ? ` • ${readTime}` : ""}
               </div>
-              {mainImageUrl && <img src={mainImageUrl} alt="main" className="w-full rounded mb-4" />}
+              {mainImageUrl && (
+                <img
+                  src={mainImageUrl}
+                  alt="main"
+                  className="w-full rounded mb-4"
+                />
+              )}
               <div className="space-y-4">
                 {sections.map((s) => (
                   <div key={s.id}>
@@ -594,7 +658,9 @@ export default function BlogAdminPage() {
                         {s.items.map((it, i) => (
                           <li
                             key={`${s.id}-bullet-${i}`}
-                            dangerouslySetInnerHTML={{ __html: renderInlineFormatting(it) }}
+                            dangerouslySetInnerHTML={{
+                              __html: renderInlineFormatting(it),
+                            }}
                           />
                         ))}
                       </ul>
@@ -604,14 +670,22 @@ export default function BlogAdminPage() {
                         {s.items.map((it, i) => (
                           <li
                             key={`${s.id}-numbered-${i}`}
-                            dangerouslySetInnerHTML={{ __html: renderInlineFormatting(it) }}
+                            dangerouslySetInnerHTML={{
+                              __html: renderInlineFormatting(it),
+                            }}
                           />
                         ))}
                       </ol>
                     )}
-                    {s.type === "image" && typeof s.content === "object" && s.content.url && (
-                      <img src={s.content.url} alt={s.content.alt} className="w-full rounded" />
-                    )}
+                    {s.type === "image" &&
+                      typeof s.content === "object" &&
+                      s.content.url && (
+                        <img
+                          src={s.content.url}
+                          alt={s.content.alt}
+                          className="w-full rounded"
+                        />
+                      )}
                   </div>
                 ))}
               </div>
@@ -631,7 +705,9 @@ export default function BlogAdminPage() {
                     <div className="font-semibold text-white">{p.title}</div>
                     <div className="text-sm text-gray-400">{p.subtitle}</div>
                     <div className="text-xs text-gray-500 mt-1">
-                      {p.date ? new Date(String(p.date)).toLocaleDateString() : ""}
+                      {p.date
+                        ? new Date(String(p.date)).toLocaleDateString()
+                        : ""}
                     </div>
                   </div>
                   <div className="flex gap-2">

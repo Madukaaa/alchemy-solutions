@@ -44,7 +44,7 @@ export default function AdminLoginPage() {
     }
 
     setError(null);
-    router.push("/admin-dashboard");
+    router.push("/admin/admin-dashboard");
   }
 
   return (
@@ -87,7 +87,9 @@ export default function AdminLoginPage() {
             </div>
           </div>
 
-          <h2 className="text-xl font-bold mb-2 hidden md:block">Admin Login</h2>
+          <h2 className="text-xl font-bold mb-2 hidden md:block">
+            Admin Login
+          </h2>
           {error && <div className="text-red-400 mb-2">{error}</div>}
 
           <label className="block mb-2">
