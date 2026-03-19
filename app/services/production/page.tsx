@@ -1,30 +1,39 @@
-import Link from "next/link";
+import ServicesHero from "@/components/servicesComponents/ServiceHero";
+import ProductionIntro from "@/components/servicesComponents/ProductionIntro";
+import YoutubeShowreel from "@/components/servicesComponents/YoutubeShowreel";
 
 export default function ProductionServicePage() {
   return (
-    <section className="min-h-screen bg-black px-6 py-20 text-white md:px-16 lg:px-20">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
-        <p className="text-sm font-semibold tracking-widest text-[#E2791D]">
-          Audio & Visual
-        </p>
+    <>
+      <ServicesHero
+        title="AUDIO & VISUAL PRODUCTION"
+        highlight="Bringing Stories to Life Through Sound & Vision"
+      />
 
-        <h1 className="text-4xl font-bold leading-tight md:text-6xl">
-          Production
-        </h1>
+      <ProductionIntro
+        imageSrc="/Alchemypics.png"
+        imageAlt="Alchemy Pictures"
+        description="We assist businesses and individuals in telling their stories through captivating visuals, encompassing both pre-recorded videos and the dynamic power of live streaming. Our team of creative professionals combines technical expertise with artistic vision to deliver exceptional audiovisual content that resonates with your audience."
+      />
 
-        <p className="max-w-2xl text-lg text-gray-200 md:text-xl">
-          Create premium audio-visual experiences that elevate your brand story.
-        </p>
+      <YoutubeShowreel
+        videoId="PP2NszjOEBA"
+        title="Watch Our AV Production Showcase"
+        description="See how we bring visions to life through captivating audiovisual storytelling"
+      />
 
-        <div className="pt-4">
-          <Link
-            href="/#services"
-            className="inline-flex items-center rounded-full border border-[#E2791D] px-6 py-3 text-sm font-semibold uppercase tracking-wider text-[#E2791D] transition-colors hover:bg-[#E2791D] hover:text-black"
-          >
-            Back to Services
-          </Link>
-        </div>
-      </div>
-    </section>
+      <ProductionIntro
+        imageSrc="/Alchemixlogo.png"
+        imageAlt="Alchemy Mix"
+        description="We transform raw musical talent into sonic gold, crafting extraordinary soundscapes that resonate with audiences worldwide. Our recording label specializes in discovering and nurturing emerging artists while providing comprehensive music production services that span from initial composition to final mastering."
+      />
+
+      <YoutubeShowreel
+        videoId="L9rqEEdpOXo" // 
+        title="Listen to Our Latest Productions"
+        description="Experience the sound of tomorrow with our cutting-edge music production"
+      />
+      
+    </>
   );
 }
