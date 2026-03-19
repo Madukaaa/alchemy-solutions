@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ServicesHero from "@/components/service/ServiceHero";
+import ExpertiseSection from "@/components/service/ExpertiseSection";
 
 export default function DevelopmentServicePage() {
   return (
@@ -9,19 +10,10 @@ export default function DevelopmentServicePage() {
         highlight="Building Seamless Digital Experience"
       />
 
+      <ExpertiseSection description="At the forefront of technology advancement, our team seamlessly blends expertise and creativity to engineer bespoke software solutions tailored to your needs." />
+
       <section className="min-h-screen bg-black px-6 py-20 text-white md:px-16 lg:px-20">
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
-          <p className="text-sm font-semibold tracking-widest text-[#E2791D]">
-            Web & Mobile
-          </p>
-
-          <h1 className="text-4xl font-bold leading-tight md:text-6xl">
-            Development
-          </h1>
-
-          <p className="max-w-2xl text-lg text-gray-200 md:text-xl">
-            Build fast, scalable web and mobile products tailored to your goals.
-          </p>
 
           <div className="pt-4">
             <Link
