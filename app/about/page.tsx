@@ -1,5 +1,6 @@
 import GeneralHero from "@/components/homeComponents/GeneralHero";
 import AboutSection from "@/components/aboutComponents/AboutSection";
+import CountSection from "@/components/aboutComponents/CountSection";
 
 export default function AboutUsPage() {
   return (
@@ -12,6 +13,7 @@ export default function AboutUsPage() {
         showTextSection={true}
       />
       <AboutSection />
+      <CountSection />
     </>
   );
 }
