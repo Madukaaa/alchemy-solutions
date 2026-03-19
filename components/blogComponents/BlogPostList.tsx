@@ -23,7 +23,7 @@ function getImageUrl(post: BlogPost) {
         s.type === "image" &&
         typeof s.content === "object" &&
         s.content &&
-        (s.content.url || s.content.secure_url)
+        (s.content.url || s.content.secure_url),
     );
     if (sec && typeof sec.content === "object" && sec.content) {
       return sec.content.url || sec.content.secure_url || "";
@@ -84,7 +84,11 @@ export default function BlogPostList() {
   }
 
   if (!blogPosts.length) {
-    return <div className="py-20 text-center text-white">No blog posts found yet.</div>;
+    return (
+      <div className="py-20 text-center text-white">
+        No blog posts found yet.
+      </div>
+    );
   }
 
   return (
@@ -114,8 +118,12 @@ export default function BlogPostList() {
             </Link>
 
             <div className="mx-auto mb-10 mt-4 w-full sm:mb-16 sm:w-4/5 md:mb-20">
-              <h2 className="text-lg font-bold text-white sm:text-xl md:text-2xl">{post.title}</h2>
-              <h3 className="mt-2 text-base font-light text-white sm:text-lg md:text-xl">{post.subtitle}</h3>
+              <h2 className="text-lg font-bold text-white sm:text-xl md:text-2xl">
+                {post.title}
+              </h2>
+              <h3 className="mt-2 text-base font-light text-white sm:text-lg md:text-xl">
+                {post.subtitle}
+              </h3>
               <div className="mt-2 text-xs text-brand sm:text-sm">
                 {formatDate(post.date || post.createdAt)}
               </div>

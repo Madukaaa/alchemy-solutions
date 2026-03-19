@@ -1,8 +1,10 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
+import { listTeamMembers } from "@/lib/firestoreHelpers";
 
 type TeamMember = {
+  id?: string;
   name: string;
   role: string;
   img?: string;
@@ -62,15 +64,89 @@ export default function TeamSection() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
 
   useEffect(() => {
-    const sorted = [...TEAM_MEMBERS].sort((a, b) => {
-      const pa =
-        typeof a.position === "number" ? a.position : (a.createdAt ?? 0);
-      const pb =
-        typeof b.position === "number" ? b.position : (b.createdAt ?? 0);
-      return pa - pb;
-    });
+    let isMounted = true;
 
-    setTeamMembers(sorted);
+    const sortMembers = (members: TeamMember[]) => {
+      return [...members].sort((a, b) => {
+        const pa =
+          typeof a.position === "number" ? a.position : (a.createdAt ?? 0);
+        const pb =
+          typeof b.position === "number" ? b.position : (b.createdAt ?? 0);
+        return pa - pb;
+      });
+    };
+
+    const toNumber = (value: unknown): number | undefined => {
+      if (typeof value === "number") return value;
+      if (typeof value === "string") {
+        const parsed = Number(value);
+        return Number.isFinite(parsed) ? parsed : undefined;
+      }
+      return undefined;
+    };
+
+    const toText = (value: unknown): string | undefined => {
+      return typeof value === "string" && value.trim().length > 0
+        ? value.trim()
+        : undefined;
+    };
+
+    const loadTeamMembers = async () => {
+      try {
+        const docs = await listTeamMembers();
+
+        const remoteMembers = docs.reduce<TeamMember[]>((acc, doc) => {
+            const record = doc as Record<string, unknown>;
+
+            const id = toText(record.id);
+            const name =
+              toText(record.name) ??
+              toText(record.fullName) ??
+              toText(record.memberName);
+            const role =
+              toText(record.role) ??
+              toText(record.designation) ??
+              toText(record.title);
+            const img =
+              toText(record.img) ??
+              toText(record.image) ??
+              toText(record.imageUrl) ??
+              toText(record.photoUrl);
+
+            if (!name || !role) {
+              return acc;
+            }
+
+            acc.push({
+              ...(id ? { id } : {}),
+              name,
+              role,
+              img,
+              position: toNumber(record.position),
+              createdAt: toNumber(record.createdAt),
+            });
+
+            return acc;
+          }, []);
+
+        const nextMembers =
+          remoteMembers.length > 0 ? remoteMembers : TEAM_MEMBERS;
+
+        if (isMounted) {
+          setTeamMembers(sortMembers(nextMembers));
+        }
+      } catch {
+        if (isMounted) {
+          setTeamMembers(sortMembers(TEAM_MEMBERS));
+        }
+      }
+    };
+
+    loadTeamMembers();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const checkScrollPosition = useCallback(() => {

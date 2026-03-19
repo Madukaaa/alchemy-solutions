@@ -18,8 +18,10 @@ export default function Navbar() {
   const [isClosing, setIsClosing] = useState(false);
   const [useLightLogo, setUseLightLogo] = useState(false);
   const [isHiddenByGallery, setIsHiddenByGallery] = useState(false);
+  const [isHiddenByScroll, setIsHiddenByScroll] = useState(false);
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const logoRef = useRef<HTMLAnchorElement | null>(null);
+  const lastScrollYRef = useRef(0);
 
   const navItems = [
     { label: "Home", href: "/" },
@@ -121,10 +123,50 @@ export default function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    let isTicking = false;
+    const threshold = 10;
+
+    const handleScroll = () => {
+      if (isTicking) {
+        return;
+      }
+
+      isTicking = true;
+
+      window.requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        const lastScrollY = lastScrollYRef.current;
+        const delta = currentScrollY - lastScrollY;
+
+        if (Math.abs(delta) >= threshold) {
+          if (delta > 0 && currentScrollY > 80) {
+            setIsHiddenByScroll(true);
+          } else if (delta < 0 || currentScrollY <= 80) {
+            setIsHiddenByScroll(false);
+          }
+
+          lastScrollYRef.current = currentScrollY;
+        }
+
+        isTicking = false;
+      });
+    };
+
+    lastScrollYRef.current = window.scrollY;
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const shouldHideNavbar = isHiddenByGallery || (isHiddenByScroll && !isMenuVisible);
+
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-60 flex items-center justify-between px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24 2xl:px-32 py-6 bg-transparent transition-opacity duration-200 ${isHiddenByGallery ? "pointer-events-none opacity-0" : "opacity-100"} ${poppins.className}`}
+        className={`fixed top-0 left-0 right-0 z-60 flex items-center justify-between px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24 2xl:px-32 py-6 bg-transparent transition-all duration-300 ${shouldHideNavbar ? "pointer-events-none opacity-0 -translate-y-full" : "opacity-100 translate-y-0"} ${poppins.className}`}
       >
         {/* Logo */}
         <Link href="/" className="flex items-center" ref={logoRef}>
