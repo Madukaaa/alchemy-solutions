@@ -135,7 +135,8 @@ const ExpandedView = ({
   const goToPrevious = React.useCallback(() => {
     if (!galleryItems.length) return;
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + galleryItems.length) % galleryItems.length,
+      (prevIndex) =>
+        (prevIndex - 1 + galleryItems.length) % galleryItems.length,
     );
   }, [galleryItems.length, setCurrentIndex]);
 
@@ -343,8 +344,12 @@ type GenerativeArtGalleryProps = {
   onExpandChange?: (expanded: boolean) => void;
 };
 
-const GenerativeArtGallery = ({ onExpandChange }: GenerativeArtGalleryProps) => {
-  const [expandedItem, setExpandedItem] = React.useState<GalleryItem | null>(null);
+const GenerativeArtGallery = ({
+  onExpandChange,
+}: GenerativeArtGalleryProps) => {
+  const [expandedItem, setExpandedItem] = React.useState<GalleryItem | null>(
+    null,
+  );
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [galleryItems] = React.useState<GalleryItem[]>(BUILD_GALLERY_ITEMS);

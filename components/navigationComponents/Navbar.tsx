@@ -109,7 +109,10 @@ export default function Navbar() {
       }
     };
 
-    window.addEventListener("gallery:expanded-change", handleGalleryExpandedChange);
+    window.addEventListener(
+      "gallery:expanded-change",
+      handleGalleryExpandedChange,
+    );
     return () => {
       window.removeEventListener(
         "gallery:expanded-change",
