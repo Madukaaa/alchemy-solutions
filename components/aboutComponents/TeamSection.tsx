@@ -116,7 +116,10 @@ export default function TeamSection() {
 
     const container = scrollContainerRef.current;
     const cardWidth = 340 + 32;
-    const visibleCards = Math.max(1, Math.floor(container.clientWidth / cardWidth));
+    const visibleCards = Math.max(
+      1,
+      Math.floor(container.clientWidth / cardWidth),
+    );
     const scrollDistance = cardWidth * visibleCards;
 
     smoothScroll(scrollDistance);
@@ -127,7 +130,10 @@ export default function TeamSection() {
 
     const container = scrollContainerRef.current;
     const cardWidth = 340 + 32;
-    const visibleCards = Math.max(1, Math.floor(container.clientWidth / cardWidth));
+    const visibleCards = Math.max(
+      1,
+      Math.floor(container.clientWidth / cardWidth),
+    );
     const scrollDistance = -cardWidth * visibleCards;
 
     smoothScroll(scrollDistance);
