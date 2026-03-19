@@ -5,6 +5,7 @@ import Link from "next/link";
 import ServicesHero from "@/components/servicesComponents/ServiceHero";
 import ExpertiseSection from "@/components/servicesComponents/ExpertiseSection";
 import YoutubeShowreel from "@/components/servicesComponents/YoutubeShowreel";
+import ContactSection from "@/components/servicesComponents/ContactSection";
 import DomeGallery from "../../../components/servicesComponents/marketing/DomeGallery";
 
 export default function MarketingServicePage() {
@@ -40,6 +41,8 @@ export default function MarketingServicePage() {
               <DomeGallery onExpandChange={onExpandChange} />
             </div>
           </section>
+
+          <ContactSection />
     
           <section className="min-h-screen bg-black px-6 py-20 text-white md:px-16 lg:px-20">
             <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
