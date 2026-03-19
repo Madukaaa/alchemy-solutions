@@ -17,7 +17,10 @@ const DotExpandButton = ({
   const [enableHover, setEnableHover] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+    if (
+      typeof window === "undefined" ||
+      typeof window.matchMedia !== "function"
+    ) {
       setEnableHover(false);
       return;
     }
@@ -76,7 +79,9 @@ const DotExpandButton = ({
           rest: { scale: 0, opacity: 0 },
           hover: { scale: 25, opacity: 1 },
         }}
-        transition={enableHover ? { duration: 0.4, ease: "easeInOut" } : { duration: 0 }}
+        transition={
+          enableHover ? { duration: 0.4, ease: "easeInOut" } : { duration: 0 }
+        }
         className="absolute inset-0 z-0 flex items-center justify-center"
       >
         <span className="h-2.5 w-2.5 rounded-full bg-white" />

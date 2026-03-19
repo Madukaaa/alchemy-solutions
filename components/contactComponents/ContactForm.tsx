@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import DotExpandButton from "./DotExpandButton";
+import DotExpandButton from "../ui/DotExpandButton";
 
 type FormData = {
   name: string;
@@ -72,7 +72,10 @@ export default function ContactForm() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setShowDropdown(false);
       }
     };
@@ -98,19 +101,27 @@ export default function ContactForm() {
 
     switch (name) {
       case "name":
-        return value.trim().length < 2 ? "Name must be at least 2 characters" : "";
+        return value.trim().length < 2
+          ? "Name must be at least 2 characters"
+          : "";
       case "email": {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(value) ? "" : "Please enter a valid email address";
+        return emailRegex.test(value)
+          ? ""
+          : "Please enter a valid email address";
       }
       case "mobile": {
         const mobileRegex = /^[+]?[\d\s\-()]{10,}$/;
-        return mobileRegex.test(value) ? "" : "Please enter a valid mobile number";
+        return mobileRegex.test(value)
+          ? ""
+          : "Please enter a valid mobile number";
       }
       case "projectType":
         return "";
       case "message":
-        return value.trim().length < 10 ? "Message must be at least 10 characters" : "";
+        return value.trim().length < 10
+          ? "Message must be at least 10 characters"
+          : "";
       default:
         return "";
     }
@@ -144,7 +155,9 @@ export default function ContactForm() {
     setFocusedField(fieldName);
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     const fieldName = name as keyof FormData;
 
@@ -221,7 +234,9 @@ export default function ContactForm() {
     (Object.keys(formData) as Array<keyof FormData>).forEach((key) => {
       if (!formData[key].trim()) {
         newErrors[key] =
-          key === "projectType" ? "Please select a project type" : "This field is required";
+          key === "projectType"
+            ? "Please select a project type"
+            : "This field is required";
       } else {
         newErrors[key] = validateField(key, formData[key]);
       }
@@ -279,7 +294,8 @@ export default function ContactForm() {
     } catch {
       setSubmitStatus({
         type: "error",
-        message: "Failed to send message. Please try again or contact us directly.",
+        message:
+          "Failed to send message. Please try again or contact us directly.",
       });
     }
   };
@@ -307,7 +323,8 @@ export default function ContactForm() {
   };
 
   const getLabelClassName = (fieldName: keyof FormData, hasValue: boolean) => {
-    const baseClass = "absolute left-5 transition-all duration-300 pointer-events-none";
+    const baseClass =
+      "absolute left-5 transition-all duration-300 pointer-events-none";
 
     if (hasValue || focusedField === fieldName) {
       return `${baseClass} top-2 text-xs text-brand font-medium`;
@@ -348,7 +365,10 @@ export default function ContactForm() {
               style={{ top: `${i * 10}%` }}
             >
               {Array.from({ length: 10 }).map((__, j) => (
-                <div key={`dot-${i}-${j}`} className="w-1 h-1 bg-brand rounded-full" />
+                <div
+                  key={`dot-${i}-${j}`}
+                  className="w-1 h-1 bg-brand rounded-full"
+                />
               ))}
             </div>
           ))}
@@ -369,7 +389,11 @@ export default function ContactForm() {
             >
               <div className="flex items-center justify-center space-x-3">
                 {submitStatus.type === "success" ? (
-                  <svg className="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <svg
+                    className="w-5 h-5 shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
                     <path
                       fillRule="evenodd"
                       d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -377,7 +401,11 @@ export default function ContactForm() {
                     />
                   </svg>
                 ) : (
-                  <svg className="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <svg
+                    className="w-5 h-5 shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
                     <path
                       fillRule="evenodd"
                       d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
@@ -385,13 +413,20 @@ export default function ContactForm() {
                     />
                   </svg>
                 )}
-                <span className="text-sm font-medium">{submitStatus.message}</span>
+                <span className="text-sm font-medium">
+                  {submitStatus.message}
+                </span>
                 <button
                   type="button"
                   onClick={() => setSubmitStatus({ type: "", message: "" })}
                   className="text-current hover:opacity-70 transition-opacity ml-2"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -408,8 +443,12 @@ export default function ContactForm() {
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 items-stretch">
           <div className="xl:col-span-2 bg-black/80 backdrop-blur-sm rounded-2xl p-10 md:p-12 border border-brand/20 min-h-175 flex flex-col w-full">
             <div className="mb-12 text-center">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Let&apos;s Start Your Project</h2>
-              <p className="text-gray-300 text-lg">Share your ideas and we&apos;ll bring them to life</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                Let&apos;s Start Your Project
+              </h2>
+              <p className="text-gray-300 text-lg">
+                Share your ideas and we&apos;ll bring them to life
+              </p>
             </div>
 
             <form autoComplete="off" onSubmit={handleSubmit} className="grow">
@@ -427,9 +466,15 @@ export default function ContactForm() {
                         className={getInputClassName("name")}
                         autoComplete="off"
                       />
-                      <label className={getLabelClassName("name", !!formData.name)}>Your Name</label>
+                      <label
+                        className={getLabelClassName("name", !!formData.name)}
+                      >
+                        Your Name
+                      </label>
                       {errors.name && touched.name && (
-                        <p className="text-red-500 text-xs mt-3 absolute -bottom-7">{errors.name}</p>
+                        <p className="text-red-500 text-xs mt-3 absolute -bottom-7">
+                          {errors.name}
+                        </p>
                       )}
                     </div>
 
@@ -444,9 +489,15 @@ export default function ContactForm() {
                         className={getInputClassName("email")}
                         autoComplete="off"
                       />
-                      <label className={getLabelClassName("email", !!formData.email)}>Your Email</label>
+                      <label
+                        className={getLabelClassName("email", !!formData.email)}
+                      >
+                        Your Email
+                      </label>
                       {errors.email && touched.email && (
-                        <p className="text-red-500 text-xs mt-3 absolute -bottom-7">{errors.email}</p>
+                        <p className="text-red-500 text-xs mt-3 absolute -bottom-7">
+                          {errors.email}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -463,11 +514,18 @@ export default function ContactForm() {
                         className={getInputClassName("mobile")}
                         autoComplete="off"
                       />
-                      <label className={getLabelClassName("mobile", !!formData.mobile)}>
+                      <label
+                        className={getLabelClassName(
+                          "mobile",
+                          !!formData.mobile,
+                        )}
+                      >
                         Your Mobile Number
                       </label>
                       {errors.mobile && touched.mobile && (
-                        <p className="text-red-500 text-xs mt-3 absolute -bottom-7">{errors.mobile}</p>
+                        <p className="text-red-500 text-xs mt-3 absolute -bottom-7">
+                          {errors.mobile}
+                        </p>
                       )}
                     </div>
 
@@ -480,7 +538,9 @@ export default function ContactForm() {
                         aria-haspopup="listbox"
                         aria-expanded={showDropdown}
                       >
-                        <span className="text-white">{formData.projectType || ""}</span>
+                        <span className="text-white">
+                          {formData.projectType || ""}
+                        </span>
                         <svg
                           className={`h-6 w-6 text-white transition-transform duration-200 ${showDropdown ? "rotate-180" : ""}`}
                           xmlns="http://www.w3.org/2000/svg"
@@ -503,7 +563,9 @@ export default function ContactForm() {
                         Project Type
                       </label>
                       {errors.projectType && touched.projectType && (
-                        <p className="text-red-500 text-xs mt-3 absolute -bottom-7">{errors.projectType}</p>
+                        <p className="text-red-500 text-xs mt-3 absolute -bottom-7">
+                          {errors.projectType}
+                        </p>
                       )}
 
                       {showDropdown && (
@@ -542,7 +604,9 @@ export default function ContactForm() {
                   autoComplete="off"
                 />
                 {errors.message && touched.message && (
-                  <p className="text-red-500 text-xs mt-3 absolute -bottom-8">{errors.message}</p>
+                  <p className="text-red-500 text-xs mt-3 absolute -bottom-8">
+                    {errors.message}
+                  </p>
                 )}
               </div>
 
@@ -554,14 +618,23 @@ export default function ContactForm() {
 
           <div className="bg-transparent backdrop-blur-sm rounded-2xl p-8 md:p-10 border border-brand/20 shadow-xl flex flex-col">
             <div className="mb-8">
-              <h1 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">Get in touch</h1>
-              <p className="text-lg text-gray-300">Do you have a project in your mind?</p>
+              <h1 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">
+                Get in touch
+              </h1>
+              <p className="text-lg text-gray-300">
+                Do you have a project in your mind?
+              </p>
             </div>
 
             <div className="space-y-8 grow">
               <div className="flex items-start space-x-4">
                 <div className="w-5 h-5 shrink-0 mt-1">
-                  <svg className="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-5 h-5 text-brand"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -571,7 +644,9 @@ export default function ContactForm() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-brand text-lg font-semibold mb-3 tracking-wide">Phone</h3>
+                  <h3 className="text-brand text-lg font-semibold mb-3 tracking-wide">
+                    Phone
+                  </h3>
                   <div className="space-y-2">
                     <p className="text-white text-base">+94 719 563 675</p>
                     <p className="text-white text-base">+61 404 713 766</p>
@@ -581,7 +656,12 @@ export default function ContactForm() {
 
               <div className="flex items-start space-x-4">
                 <div className="w-5 h-5 shrink-0 mt-1">
-                  <svg className="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg
+                    className="w-5 h-5 text-brand"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -591,7 +671,9 @@ export default function ContactForm() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-brand text-lg font-semibold mb-3 tracking-wide">Email</h3>
+                  <h3 className="text-brand text-lg font-semibold mb-3 tracking-wide">
+                    Email
+                  </h3>
                   <p className="text-white text-base">hello@alchemy.lk</p>
                 </div>
               </div>
@@ -599,7 +681,12 @@ export default function ContactForm() {
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
                   <div className="w-5 h-5 shrink-0 mt-1">
-                    <svg className="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg
+                      className="w-5 h-5 text-brand"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -615,7 +702,9 @@ export default function ContactForm() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-brand text-lg font-semibold mb-2 tracking-wide">Sri Lanka</h3>
+                    <h3 className="text-brand text-lg font-semibold mb-2 tracking-wide">
+                      Sri Lanka
+                    </h3>
                     <p className="text-gray-300 text-base leading-relaxed">
                       43/5, Senanayake Mawatha,
                       <br />
@@ -626,7 +715,12 @@ export default function ContactForm() {
 
                 <div className="flex items-start space-x-4">
                   <div className="w-5 h-5 shrink-0 mt-1">
-                    <svg className="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg
+                      className="w-5 h-5 text-brand"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -642,7 +736,9 @@ export default function ContactForm() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-brand text-lg font-semibold mb-2 tracking-wide">Australia</h3>
+                    <h3 className="text-brand text-lg font-semibold mb-2 tracking-wide">
+                      Australia
+                    </h3>
                     <p className="text-gray-300 text-base leading-relaxed">
                       203, George Street
                       <br />
