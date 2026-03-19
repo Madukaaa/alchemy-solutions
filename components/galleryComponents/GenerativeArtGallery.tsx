@@ -82,7 +82,9 @@ type FirestoreGalleryDoc = {
 };
 
 const pickString = (value: unknown) =>
-  typeof value === "string" && value.trim().length > 0 ? value.trim() : undefined;
+  typeof value === "string" && value.trim().length > 0
+    ? value.trim()
+    : undefined;
 
 const resolveImageUrl = (item: FirestoreGalleryDoc) => {
   if (typeof item.mainImage === "string") {
@@ -90,7 +92,9 @@ const resolveImageUrl = (item: FirestoreGalleryDoc) => {
   }
 
   if (item.mainImage && typeof item.mainImage === "object") {
-    return pickString(item.mainImage.secure_url) || pickString(item.mainImage.url);
+    return (
+      pickString(item.mainImage.secure_url) || pickString(item.mainImage.url)
+    );
   }
 
   return (
@@ -102,11 +106,15 @@ const resolveImageUrl = (item: FirestoreGalleryDoc) => {
   );
 };
 
-const normalizeGalleryItem = (item: FirestoreGalleryDoc, index: number): GalleryItem | null => {
+const normalizeGalleryItem = (
+  item: FirestoreGalleryDoc,
+  index: number,
+): GalleryItem | null => {
   const imageUrl = resolveImageUrl(item);
   if (!imageUrl) return null;
 
-  const label = pickString(item.title) || pickString(item.name) || pickString(item.caption);
+  const label =
+    pickString(item.title) || pickString(item.name) || pickString(item.caption);
   const title = label || `Gallery Image ${index + 1}`;
 
   return {
@@ -400,7 +408,9 @@ const GenerativeArtGallery = ({
           .map((item, index) => normalizeGalleryItem(item, index))
           .filter((item): item is GalleryItem => item !== null);
 
-        setGalleryItems(normalized.length ? normalized : FALLBACK_GALLERY_ITEMS);
+        setGalleryItems(
+          normalized.length ? normalized : FALLBACK_GALLERY_ITEMS,
+        );
       } catch (error) {
         console.warn("Failed to load gallery from Firestore:", error);
         if (isMounted) {

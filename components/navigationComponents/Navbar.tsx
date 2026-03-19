@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, X, Facebook, Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Poppins } from "next/font/google";
 import FloatingCallButton from "./FloatingCallButton";
 import HoverAnimatedText from "./HoverAnimatedText";
@@ -14,6 +15,7 @@ const poppins = Poppins({
 });
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [useLightLogo, setUseLightLogo] = useState(false);
@@ -163,6 +165,15 @@ export default function Navbar() {
 
   const shouldHideNavbar =
     isHiddenByGallery || (isHiddenByScroll && !isMenuVisible);
+
+  const isAdminRoute =
+    pathname.startsWith("/admin") ||
+    pathname.includes("-admin") ||
+    pathname.includes("/admin-");
+
+  if (isAdminRoute) {
+    return null;
+  }
 
   return (
     <>
