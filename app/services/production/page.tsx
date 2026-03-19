@@ -1,5 +1,6 @@
 import ServicesHero from "@/components/service/ServiceHero";
 import ProductionIntro from "@/components/service/ProductionIntro";
+import YoutubeShowreel from "@/components/service/YoutubeShowreel";
 
 export default function ProductionServicePage() {
   return (
@@ -15,11 +16,24 @@ export default function ProductionServicePage() {
         description="We assist businesses and individuals in telling their stories through captivating visuals, encompassing both pre-recorded videos and the dynamic power of live streaming. Our team of creative professionals combines technical expertise with artistic vision to deliver exceptional audiovisual content that resonates with your audience."
       />
 
+      <YoutubeShowreel
+        videoId="PP2NszjOEBA"
+        title="Watch Our AV Production Showcase"
+        description="See how we bring visions to life through captivating audiovisual storytelling"
+      />
+
       <ProductionIntro
         imageSrc="/Alchemixlogo.png"
         imageAlt="Alchemy Mix"
         description="We transform raw musical talent into sonic gold, crafting extraordinary soundscapes that resonate with audiences worldwide. Our recording label specializes in discovering and nurturing emerging artists while providing comprehensive music production services that span from initial composition to final mastering."
       />
+
+      <YoutubeShowreel
+        videoId="L9rqEEdpOXo" // 
+        title="Listen to Our Latest Productions"
+        description="Experience the sound of tomorrow with our cutting-edge music production"
+      />
+      
     </>
   );
 }

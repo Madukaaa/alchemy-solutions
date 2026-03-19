@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ServicesHero from "@/components/service/ServiceHero";
 import ExpertiseSection from "@/components/service/ExpertiseSection";
+import YoutubeShowreel from "@/components/service/YoutubeShowreel";
 
 export default function MarketingServicePage() {
   return ( 
@@ -11,6 +12,12 @@ export default function MarketingServicePage() {
           />
     
           <ExpertiseSection description="As a reputable and experienced company, we specialize in providing top-notch digital marketing services to help businesses achieve their goals in a crowded online marketplace" />
+
+          <YoutubeShowreel
+            videoId="8H64aNd8beo"
+            title="Watch Our Digital Marketing Showcase"
+            description="See how transform businesses through innovative digital strategies"
+          />
     
           <section className="min-h-screen bg-black px-6 py-20 text-white md:px-16 lg:px-20">
             <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
