@@ -1,6 +1,7 @@
 import ServicesHero from "@/components/servicesComponents/ServiceHero";
 import ProductionIntro from "@/components/servicesComponents/ProductionIntro";
 import YoutubeShowreel from "@/components/servicesComponents/YoutubeShowreel";
+import ContactSection from "@/components/servicesComponents/ContactSection";
 
 export default function ProductionServicePage() {
   return (
@@ -33,6 +34,7 @@ export default function ProductionServicePage() {
         title="Listen to Our Latest Productions"
         description="Experience the sound of tomorrow with our cutting-edge music production"
       />
+      <ContactSection />
       
     </>
   );
