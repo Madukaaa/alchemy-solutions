@@ -1,7 +1,7 @@
 import HeroAlchemy from "@/components/homeComponents/HeroAlchemy";
 import ServicesShowcase from "@/components/homeComponents/ServicesShowcase";
 import { HeroScrollVideo } from "@/components/ui/scroll-animated-video";
-import FeaturedWork from "@/components/FeaturedWork";
+import FeaturedWork from "@/components/homeComponents/FeaturedWork";
 import AboutUsSection from "@/components/homeComponents/AboutUsSection";
 
 export default function Home() {
