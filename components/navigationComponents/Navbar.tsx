@@ -31,6 +31,7 @@ export default function Navbar() {
     { label: "Services", href: "/#services" },
     { label: "Gallery", href: "/gallery" },
     { label: "Blog", href: "/blog" },
+    // { label: "Careers", href: "/careers" },
     { label: "Contact", href: "/contact" },
   ];
 

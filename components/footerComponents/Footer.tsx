@@ -195,12 +195,20 @@ Australia`,
 
       <div className="pt-8 pb-2 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 relative z-10">
         <p>© 2025 Alchemy. All rights reserved.</p>
-        <Link
-          href="/privacy-policy"
-          className="transition-colors duration-300 hover:text-brand hover:scale-105 transform"
-        >
-          Privacy Policy
-        </Link>
+        <div className="flex gap-4">
+          <Link
+            href="/careers"
+            className="transition-colors duration-300 hover:text-brand hover:scale-105 transform"
+          >
+            Careers
+          </Link>
+          <Link
+            href="/privacy-policy"
+            className="transition-colors duration-300 hover:text-brand hover:scale-105 transform"
+          >
+            Privacy Policy
+          </Link>
+        </div>
       </div>
     </footer>
   );
