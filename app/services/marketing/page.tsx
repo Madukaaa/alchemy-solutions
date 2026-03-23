@@ -32,11 +32,11 @@ export default function MarketingServicePage() {
         description="See how transform businesses through innovative digital strategies"
       />
 
-      <section className="bg-black px-4 pb-16 pt-6 md:px-10 lg:px-16">
+      <section className="bg-black px-4 pb-16 pt-6 md:px-10 lg:px-16 overflow-x-hidden">
         <h2 className="mb-6 text-center text-2xl font-bold tracking-wide text-[#E2791D] md:mb-10 md:text-4xl">
           OUR WORK SHOWCASE
         </h2>
-        <div style={{ width: "100vw", height: "100vh" }}>
+        <div className="relative h-[70vh] min-h-[460px] w-full overflow-hidden md:h-[85vh] md:min-h-[620px]">
           {/* Forward expand handler so header hides when fullscreen */}
           <DomeGallery onExpandChange={onExpandChange} />
         </div>

@@ -1057,7 +1057,7 @@ export default function DomeGallery({
       <style dangerouslySetInnerHTML={{ __html: cssStyles }} />
       <div
         ref={rootRef}
-        className="sphere-root relative w-full h-full "
+        className="sphere-root relative w-full h-full overflow-hidden"
         style={{
           ["--segments-x"]: segments,
           ["--segments-y"]: segments,
