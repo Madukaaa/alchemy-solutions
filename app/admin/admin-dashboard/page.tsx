@@ -12,6 +12,7 @@ import {
   listITProjects,
   listEventImages,
   listCareers,
+  listClientLogos,
 } from "@/lib/firestoreHelpers";
 
 type CountValue = number | null;
@@ -52,6 +53,7 @@ export default function AdminDashboardPage() {
   const [itProjectsCount, setItProjectsCount] = useState<CountValue>(null);
   const [eventImagesCount, setEventImagesCount] = useState<CountValue>(null);
   const [careersCount, setCareersCount] = useState<CountValue>(null);
+  const [clientLogosCount, setClientLogosCount] = useState<CountValue>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -154,6 +156,17 @@ export default function AdminDashboardPage() {
           setCareersCount(0);
         }
       }
+
+      try {
+        const items = await listClientLogos();
+        if (mounted) {
+          setClientLogosCount(Array.isArray(items) ? items.length : 0);
+        }
+      } catch {
+        if (mounted) {
+          setClientLogosCount(0);
+        }
+      }
     }
 
     loadCounts();
@@ -216,7 +229,7 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4">
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 gap-4">
           <StatCard
             title="Blogs"
             count={blogCount}
@@ -271,6 +284,14 @@ export default function AdminDashboardPage() {
             accent="bg-gradient-to-br from-amber-600 to-yellow-500"
             icon={
               <span className="block h-6 w-6 text-center font-bold">C</span>
+            }
+          />
+          <StatCard
+            title="Client Logos"
+            count={clientLogosCount}
+            accent="bg-gradient-to-br from-orange-600 to-red-500"
+            icon={
+              <span className="block h-6 w-6 text-center font-bold">L</span>
             }
           />
         </div>

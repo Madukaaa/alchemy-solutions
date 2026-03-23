@@ -4,6 +4,7 @@ import { HeroScrollVideo } from "@/components/ui/scroll-animated-video";
 import FeaturedWork from "@/components/homeComponents/FeaturedWork";
 import AboutUsSection from "@/components/homeComponents/AboutUsSection";
 import LogoLoop from "@/components/LogoLoop";
+import { listClientLogos } from "@/lib/firestoreHelpers";
 
 const partnerLogos = [
   { src: "/logos/Alchemixlogo.png", alt: "Alchemix logo" },
@@ -12,7 +13,20 @@ const partnerLogos = [
   { src: "/logos/Alchemypics.png", alt: "Alchemy Pictures logo" },
 ];
 
-export default function Home() {
+export default async function Home() {
+  let dbLogos: any[] = [];
+  try {
+    dbLogos = await listClientLogos();
+  } catch (err) {
+    console.error("Failed to load client logos from Firestore:", err);
+  }
+
+  // Combine hardcoded logos with ones from DB, or just use DB if preferred.
+  // Here we'll show DB logos if they exist, otherwise fallback to defaults.
+  const displayLogos = dbLogos.length > 0 
+    ? dbLogos.map(l => ({ src: l.url, alt: l.alt || l.name }))
+    : partnerLogos;
+
   return (
     <>
       <HeroAlchemy />
@@ -43,7 +57,7 @@ export default function Home() {
         <h2 className="mb-10 text-center text-3xl font-bold uppercase tracking-wide text-brand md:mb-14 md:text-4xl">
           SHOWCASING OUR BRAND TRAILBLAZERS
         </h2>
-        <LogoLoop logos={partnerLogos} speed={90} logoHeight={60} gap={120} scaleOnHover />
+        <LogoLoop logos={displayLogos} speed={90} logoHeight={60} gap={120} scaleOnHover />
       </section>
       <AboutUsSection />
     </>
