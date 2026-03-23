@@ -16,3 +16,18 @@ export function createUploadFormData(file: File, folder = "blog-images") {
 
   return fd;
 }
+
+export async function uploadToCloudinary(file: File, folder: string) {
+  const formData = createUploadFormData(file, folder);
+  const res = await fetch(getCloudinaryUrl(), {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || "Cloudinary upload failed.");
+  }
+
+  return (await res.json()) as { secure_url?: string; url?: string };
+}

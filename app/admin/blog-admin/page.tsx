@@ -10,7 +10,7 @@ import {
   updateBlogPost,
   type BlogPost,
 } from "@/lib/firestoreHelpers";
-import { createUploadFormData, getCloudinaryUrl } from "@/lib/cloudinary";
+import { uploadToCloudinary } from "@/lib/cloudinary";
 
 type SectionType =
   | "heading"
@@ -112,21 +112,6 @@ function getImageUrl(image: StoredImage) {
   if (!image) return "";
   if (typeof image === "string") return image;
   return image.secure_url ?? image.url ?? "";
-}
-
-async function uploadToCloudinary(file: File, folder: string) {
-  const formData = createUploadFormData(file, folder);
-  const res = await fetch(getCloudinaryUrl(), {
-    method: "POST",
-    body: formData,
-  });
-
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text || "Cloudinary upload failed.");
-  }
-
-  return (await res.json()) as { secure_url?: string; url?: string };
 }
 
 function BlogAdminInner() {
