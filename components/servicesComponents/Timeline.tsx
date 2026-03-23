@@ -135,7 +135,10 @@ const TimelineCore = ({ data, isMobile, isTablet, isTabletVertical }: any) => {
               }`}
             >
               {/* Dot container */}
-              <div className="h-10 w-10 flex items-center justify-center relative">
+              <div 
+                className="h-10 w-10 shrink-0 flex items-center justify-center relative"
+                ref={(el) => { dotRefs.current[index] = el; }}
+              >
                 <motion.div
                   className="absolute rounded-full border-4 border-orange-200 z-50"
                   animate={{
@@ -151,7 +154,6 @@ const TimelineCore = ({ data, isMobile, isTablet, isTabletVertical }: any) => {
                       ? "bg-brand border-brand shadow-lg shadow-brand/70"
                       : "bg-brand border-brand"
                   }`}
-                  ref={(el) => { dotRefs.current[index] = el; }}
                   animate={{ scale: isActive ? 1.2 : 1 }}
                   transition={{ type: "spring", stiffness: 200, damping: 15 }}
                 />
@@ -211,7 +213,7 @@ const TimelineCore = ({ data, isMobile, isTablet, isTabletVertical }: any) => {
       {/* Vertical line - Desktop and Tablet (except tablet vertical) */}
       {shouldShowVerticalLine && (
         <div
-          className="absolute w-[3px] bg-brand transition-colors duration-300"
+          className="absolute w-[3px] bg-brand transition-colors duration-300 -translate-x-1/2"
           style={{
             left: lineLeft,
             top: lineStart,
