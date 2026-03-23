@@ -220,7 +220,7 @@ export default function GalleryAdminPage() {
             <button
               type="submit"
               disabled={saving || uploaded.length === 0}
-              className="rounded bg-[#E87A27] px-3 py-2 text-white disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded bg-brand px-3 py-2 text-white disabled:cursor-not-allowed disabled:opacity-50"
             >
               {saving ? "Saving..." : "Add to Gallery"}
             </button>

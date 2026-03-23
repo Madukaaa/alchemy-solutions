@@ -257,7 +257,7 @@ export default function AboutUsAdminPage() {
             <div>
               <button
                 disabled={saving}
-                className="rounded bg-[#E87A27] px-3 py-2 text-white disabled:cursor-not-allowed disabled:opacity-60"
+                className="rounded bg-brand px-3 py-2 text-white disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {saving ? "Adding..." : "Add Member"}
               </button>
@@ -310,7 +310,7 @@ export default function AboutUsAdminPage() {
                           <div className="flex gap-2">
                             <button
                               onClick={() => void handleSave(member.id)}
-                              className="rounded bg-[#E87A27] px-3 py-1"
+                              className="rounded bg-brand px-3 py-1"
                             >
                               Save
                             </button>

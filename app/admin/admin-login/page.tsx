@@ -126,7 +126,7 @@ export default function AdminLoginPage() {
             />
           </label>
 
-          <button className="bg-[#E87A27] hover:opacity-95 text-white px-4 py-2 rounded w-full">
+          <button className="bg-brand hover:opacity-95 text-white px-4 py-2 rounded w-full">
             Sign in
           </button>
         </form>

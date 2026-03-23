@@ -616,7 +616,7 @@ export default function BlogAdminPage() {
             </div>
 
             <div className="flex gap-2">
-              <button className="px-4 py-2 bg-[#E87A27] rounded-md text-white shadow-sm hover:shadow-md transition">
+              <button className="px-4 py-2 bg-brand rounded-md text-white shadow-sm hover:shadow-md transition">
                 {editingId ? "Save Changes" : "Create Post"}
               </button>
               <button
@@ -732,7 +732,7 @@ export default function BlogAdminPage() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => startEdit(p)}
-                      className="px-2 py-1 border rounded text-yellow-300"
+                      className="px-2 py-1 border rounded text-brand"
                     >
                       Edit
                     </button>

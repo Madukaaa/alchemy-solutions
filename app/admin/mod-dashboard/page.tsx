@@ -191,11 +191,13 @@ export default function ModDashboardPage() {
           </div>
 
           <div className="bg-gray-800 p-4 rounded-lg ring-1 ring-gray-700 flex items-center gap-3 md:col-span-1">
-            <div className="p-2 bg-linear-to-br from-yellow-600 to-orange-500 rounded text-white">
+            <div className="p-2 bg-linear-to-br from-brand to-orange-500 rounded text-white">
               <span className="block h-6 w-6 text-center font-bold">D</span>
             </div>
             <div>
-              <div className="text-sm text-gray-300">Digital Marketing Gallery</div>
+              <div className="text-sm text-gray-300">
+                Digital Marketing Gallery
+              </div>
               <div className="text-xl font-semibold">
                 {domeCount == null ? "-" : domeCount}
               </div>
@@ -208,7 +210,7 @@ export default function ModDashboardPage() {
               <div className="mt-2 flex gap-2 flex-wrap">
                 <Link
                   href="/admin/blog-admin?from=mod"
-                  className="px-3 py-2 bg-[#E87A27] text-white rounded shadow-sm"
+                  className="px-3 py-2 bg-brand text-white rounded shadow-sm"
                 >
                   Manage Blogs
                 </Link>

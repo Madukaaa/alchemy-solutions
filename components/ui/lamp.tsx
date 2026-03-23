@@ -86,8 +86,7 @@ export const LampContainer = ({
             height: "var(--lamp-height)",
             overflow: "visible",
             width: "var(--lamp-width-expanded)",
-            background:
-              "conic-gradient(from 70deg at center top, #ff8c00, transparent, transparent)",
+            background: `conic-gradient(from 70deg at center top, var(--brand), transparent, transparent)`,
             color: "white",
           }}
         >
@@ -130,8 +129,7 @@ export const LampContainer = ({
             left: "50%",
             height: "var(--lamp-height)",
             width: "var(--lamp-width-expanded)",
-            background:
-              "conic-gradient(from 290deg at center top, transparent, transparent, #ff8c00)",
+            background: `conic-gradient(from 290deg at center top, transparent, transparent, var(--brand))`,
             color: "white",
           }}
         >
@@ -192,7 +190,7 @@ export const LampContainer = ({
             width: "var(--glow-size)",
             transform: "translateY(-50%)",
             borderRadius: "50%",
-            backgroundColor: "#ff8c00",
+            backgroundColor: "var(--brand)",
             opacity: 0.5,
             filter: "blur(var(--blur-size))",
           }}
@@ -213,7 +211,7 @@ export const LampContainer = ({
             width: "calc(var(--lamp-width-expanded) * 0.53)",
             transform: "translateY(calc(var(--lamp-height) * -0.43))",
             borderRadius: "50%",
-            backgroundColor: "#ffa500",
+            backgroundColor: "var(--brand)",
             filter: "blur(32px)",
           }}
         ></motion.div>
@@ -232,7 +230,7 @@ export const LampContainer = ({
             height: "2px",
             width: "var(--lamp-width-expanded)",
             transform: "translateY(calc(var(--lamp-height) * -0.5))",
-            backgroundColor: "#ff8c00",
+            backgroundColor: "var(--brand)",
           }}
         ></motion.div>
 

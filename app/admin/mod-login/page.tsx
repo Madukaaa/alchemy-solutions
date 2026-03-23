@@ -81,7 +81,9 @@ export default function ModLoginPage() {
             />
             <div>
               <div className="text-lg font-semibold">Moderator Login</div>
-              <div className="text-xs text-gray-400">Manage content securely</div>
+              <div className="text-xs text-gray-400">
+                Manage content securely
+              </div>
             </div>
           </div>
 
@@ -124,7 +126,7 @@ export default function ModLoginPage() {
             />
           </label>
 
-          <button className="bg-[#E87A27] hover:opacity-95 text-white px-4 py-2 rounded w-full">
+          <button className="bg-brand hover:opacity-95 text-white px-4 py-2 rounded w-full">
             Sign in
           </button>
         </form>

@@ -22,7 +22,7 @@ export default function YoutubeShowreel({
         {!showVideo ? (
           <div
             onClick={() => setShowVideo(true)}
-            className="group relative mx-auto h-80 w-full max-w-5xl cursor-pointer overflow-hidden rounded-xl transition-transform duration-300 hover:scale-105 md:h-[30rem]"
+            className="group relative mx-auto h-80 w-full max-w-5xl cursor-pointer overflow-hidden rounded-xl transition-transform duration-300 hover:scale-105 md:h-120"
             style={{
               backgroundImage: `url("https://img.youtube.com/vi/${videoId}/maxresdefault.jpg")`,
               backgroundSize: "cover",
@@ -35,12 +35,12 @@ export default function YoutubeShowreel({
               </div>
             </div>
 
-            <div className="absolute bottom-0 left-0 right-0 overflow-hidden bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3 text-left text-white sm:p-4">
-              <div className="max-w-full whitespace-normal break-words">
+            <div className="absolute bottom-0 left-0 right-0 overflow-hidden bg-linear-to-t from-black/80 via-black/40 to-transparent p-3 text-left text-white sm:p-4">
+              <div className="max-w-full whitespace-normal wrap-break-word">
                 <h3 className="mb-3 text-sm font-bold leading-tight drop-shadow-lg sm:text-lg">
                   {title}
                 </h3>
-                <p className="mb-5 break-words text-xs leading-snug text-gray-200 drop-shadow-md sm:text-sm">
+                <p className="mb-5 wrap-break-word text-xs leading-snug text-gray-200 drop-shadow-md sm:text-sm">
                   {description}
                 </p>
               </div>
@@ -50,7 +50,7 @@ export default function YoutubeShowreel({
           <div className="relative mx-auto w-full max-w-5xl py-12 md:py-20">
             <div className="overflow-hidden rounded-xl">
               <iframe
-                className="h-80 w-full md:h-[30rem]"
+                className="h-80 w-full md:h-120"
                 src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
                 title={title}
                 frameBorder="0"
