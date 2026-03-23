@@ -51,7 +51,7 @@ export default function Home() {
         }
       />
       <section className="h-[100svh] bg-black">
-        <CircularGallery items={galleryItems} bend={0} />
+        <CircularGallery items={galleryItems} bend={0} gapPx={64} />
       </section>
     </>
   );

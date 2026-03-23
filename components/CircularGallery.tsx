@@ -624,17 +624,17 @@ export default function CircularGallery({
   const captionStyle = captionWidth ? { maxWidth: `${Math.round(captionWidth)}px` } : undefined;
 
   return (
-    <section className="h-full w-full bg-black">
-      <div ref={containerRef} className="h-[64%] min-h-[300px] w-full overflow-hidden cursor-grab active:cursor-grabbing" />
+    <section className="h-full w-full bg-black flex flex-col justify-center">
+      <div ref={containerRef} className="h-[55%] min-h-[250px] w-full overflow-hidden cursor-grab active:cursor-grabbing" />
 
-      <div className="mx-auto px-5 pb-8 pt-5 text-center sm:pt-8" style={captionStyle}>
-        <h3 className="text-2xl font-bold tracking-wider text-brand md:text-4xl">
+      <div className="mx-auto px-5 pb-8 pt-0 text-center sm:pt-2" style={captionStyle}>
+        <h3 className="text-lg font-bold tracking-wider text-brand md:text-2xl">
           {activeItem.title}
         </h3>
-        <p className="mt-3 text-[20px] leading-[1.3] text-white/92 sm:text-[34px]">
+        <p className="mt-2 text-base leading-[1.3] text-white/92 sm:text-xl">
           {activeItem.description}
         </p>
-        <p className="mt-3 text-[16px] leading-[1.3] text-white/60 sm:text-[26px]">{activeItem.category}</p>
+        <p className="mt-2 text-sm leading-[1.3] text-white/60 sm:text-base">{activeItem.category}</p>
       </div>
     </section>
   );
