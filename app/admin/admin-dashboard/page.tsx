@@ -311,12 +311,6 @@ export default function AdminDashboardPage() {
                   DM Gallery
                 </Link>
                 <Link
-                  href="/admin/event-carousel-admin"
-                  className="px-3 py-2 bg-gray-700 text-white rounded border border-gray-700"
-                >
-                  Event Carousel
-                </Link>
-                <Link
                   href="/admin/client-logos-admin"
                   className="px-3 py-2 bg-gray-700 text-white rounded border border-gray-700"
                 >
@@ -366,12 +360,6 @@ export default function AdminDashboardPage() {
               className="p-4 bg-gray-800 text-white rounded shadow hover:shadow-lg ring-1 ring-gray-700"
             >
               Digital Marketing Gallery Management
-            </Link>
-            <Link
-              href="/admin/event-carousel-admin"
-              className="p-4 bg-gray-800 text-white rounded shadow hover:shadow-lg ring-1 ring-gray-700"
-            >
-              Event Carousel Management
             </Link>
             <Link
               href="/admin/client-logos-admin"
