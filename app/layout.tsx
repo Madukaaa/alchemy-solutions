@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navigationComponents/Navbar";
 import PageTransition from "@/components/ui/PageTransition";
+import SplashScreen from "@/components/ui/SplashScreen";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -44,6 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} ${poppins.variable} antialiased bg-black text-white`}>
+        <SplashScreen />
         <Navbar />
         <PageTransition>{children}</PageTransition>
       </body>
