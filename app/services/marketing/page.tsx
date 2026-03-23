@@ -7,6 +7,8 @@ import ExpertiseSection from "@/components/servicesComponents/ExpertiseSection";
 import YoutubeShowreel from "@/components/servicesComponents/YoutubeShowreel";
 import ContactSection from "@/components/servicesComponents/ContactSection";
 import DomeGallery from "../../../components/servicesComponents/marketing/DomeGallery";
+import Timeline from "@/components/servicesComponents/Timeline";
+import digitalMarketingTimelineData from "@/data/digitalMarketingTimelineData";
 
 export default function MarketingServicePage() {
   const onExpandChange = useCallback((expanded: boolean) => {
@@ -42,6 +44,7 @@ export default function MarketingServicePage() {
         </div>
       </section>
 
+      <Timeline data={digitalMarketingTimelineData} />
       <ContactSection />
     </>
   );

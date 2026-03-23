@@ -2,8 +2,7 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 
-// ✅ Import content file
-import timelineData from "../../data/timelineData";
+
 
 const TimelineCore = ({ data, isMobile, isTablet, isTabletVertical }: any) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -225,10 +224,24 @@ const TimelineCore = ({ data, isMobile, isTablet, isTabletVertical }: any) => {
   );
 };
 
-const Timeline = () => {
+const Timeline = ({ data }: { data: any[] }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
   const [isTabletVertical, setIsTabletVertical] = useState(false);
+  const [particles, setParticles] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Generate particles on client to avoid hydration mismatch
+    const generatedParticles = Array.from({ length: 20 }).map(() => ({
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+      size: Math.random() * 4 + 2,
+      isBrand: Math.random() > 0.5,
+      delay: Math.random() * 2000,
+      duration: 6000 + Math.random() * 4000,
+    }));
+    setParticles(generatedParticles);
+  }, []);
 
   useEffect(() => {
     const checkDevice = () => {
@@ -246,9 +259,6 @@ const Timeline = () => {
     window.addEventListener("resize", checkDevice);
     return () => window.removeEventListener("resize", checkDevice);
   }, []);
-
-  // ✅ Choose content
-  const data = timelineData;
 
   return (
     <div className="w-full md:px-10 relative overflow-hidden" style={{ backgroundColor: "#000000" }}>
@@ -280,31 +290,22 @@ const Timeline = () => {
         
         {/* Floating particles background */}
         <div className="absolute inset-0 opacity-50 pointer-events-none">
-          {Array.from({ length: 20 }).map((_, index) => {
-            const top = Math.random() * 100;
-            const left = Math.random() * 100;
-            const size = Math.random() * 4 + 2; // 0.5px to 2px
-            const isBrand = Math.random() > 0.5;
-            const delay = Math.random() * 2000;
-            const duration = 6000 + Math.random() * 4000; // 6-10 seconds
-            
-            return (
-              <div
-                key={index}
-                className={`absolute rounded-full animate-float ${
-                  isBrand ? 'bg-brand' : 'bg-white'
-                }`}
-                style={{
-                  top: `${top}%`,
-                  left: `${left}%`,
-                  width: `${size}px`,
-                  height: `${size}px`,
-                  animationDelay: `${delay}ms`,
-                  animationDuration: `${duration}ms`,
-                }}
-              />
-            );
-          })}
+          {particles.map((p, index) => (
+            <div
+              key={index}
+              className={`absolute rounded-full animate-float ${
+                p.isBrand ? 'bg-brand' : 'bg-white'
+              }`}
+              style={{
+                top: `${p.top}%`,
+                left: `${p.left}%`,
+                width: `${p.size}px`,
+                height: `${p.size}px`,
+                animationDelay: `${p.delay}ms`,
+                animationDuration: `${p.duration}ms`,
+              }}
+            />
+          ))}
         </div>
       </div>
 
