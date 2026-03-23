@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navigationComponents/Navbar";
+import PageTransition from "@/components/PageTransition";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -44,7 +45,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className} ${poppins.variable} antialiased bg-black text-white`}>
         <Navbar />
-        {children}
+        <PageTransition>{children}</PageTransition>
       </body>
     </html>
   );
