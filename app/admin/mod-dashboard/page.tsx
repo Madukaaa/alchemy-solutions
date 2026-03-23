@@ -215,13 +215,13 @@ export default function ModDashboardPage() {
                   Manage Blogs
                 </Link>
                 <Link
-                  href="/admin/gallery-admin"
+                  href="/admin/gallery-admin?from=mod"
                   className="px-3 py-2 bg-gray-700 text-white rounded border border-gray-700"
                 >
                   Manage Gallery
                 </Link>
                 <Link
-                  href="/admin/dome-gallery-admin"
+                  href="/admin/dome-gallery-admin?from=mod"
                   className="px-3 py-2 bg-gray-700 text-white rounded border border-gray-700"
                 >
                   Digital Marketing Gallery Management
@@ -239,13 +239,13 @@ export default function ModDashboardPage() {
             Blog Management
           </Link>
           <Link
-            href="/admin/gallery-admin"
+            href="/admin/gallery-admin?from=mod"
             className="p-4 bg-gray-800 text-white rounded shadow hover:shadow-lg ring-1 ring-gray-700"
           >
             Gallery Management
           </Link>
           <Link
-            href="/admin/dome-gallery-admin"
+            href="/admin/dome-gallery-admin?from=mod"
             className="p-4 bg-gray-800 text-white rounded shadow hover:shadow-lg ring-1 ring-gray-700"
           >
             Digital Marketing Gallery Management

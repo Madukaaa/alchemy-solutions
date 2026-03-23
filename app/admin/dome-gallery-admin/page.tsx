@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   addDomeImage,
   listDomeImages,
@@ -13,11 +14,23 @@ type UploadedItem = { secure_url: string; url?: string; public_id?: string; asse
 type GalleryItem = { id: string; imageUrl?: string; title?: string };
 
 export default function DomeGalleryAdmin() {
+  return (
+    <Suspense fallback={<div className="p-8 text-white">Loading...</div>}>
+      <DomeGalleryAdminContent />
+    </Suspense>
+  );
+}
+
+function DomeGalleryAdminContent() {
   const [uploaded, setUploaded] = useState<UploadedItem[]>([]);
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [lastError, setLastError] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const searchParams = useSearchParams();
+  const from = searchParams.get("from");
+
+  const backLink = from === "mod" ? "/admin/mod-dashboard" : "/admin/admin-dashboard";
 
   async function load() {
     const all = await listDomeImages();
@@ -101,7 +114,7 @@ export default function DomeGalleryAdmin() {
     <div className="p-8 min-h-screen bg-gray-900 text-white">
       <div className="mb-6">
         <Link
-          href="/admin/admin-dashboard"
+          href={backLink}
           className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded text-sm border border-gray-700"
         >
           Back to Dashboard

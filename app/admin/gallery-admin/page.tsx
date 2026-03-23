@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   addGalleryItem,
   deleteGalleryItem,
@@ -37,11 +38,23 @@ function resolveGalleryImageUrl(item: GalleryItem) {
 }
 
 export default function GalleryAdminPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-white min-h-screen bg-gray-900">Loading...</div>}>
+      <GalleryAdminContent />
+    </Suspense>
+  );
+}
+
+function GalleryAdminContent() {
   const [uploaded, setUploaded] = useState<CloudinaryUploadResponse[]>([]);
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const searchParams = useSearchParams();
+  const from = searchParams.get("from");
+
+  const backLink = from === "mod" ? "/admin/mod-dashboard" : "/admin/admin-dashboard";
 
   async function load() {
     setLoading(true);
@@ -172,7 +185,7 @@ export default function GalleryAdminPage() {
           </div>
 
           <Link
-            href="/admin/admin-dashboard"
+            href={backLink}
             className="rounded border border-gray-700 bg-gray-800 px-3 py-2 text-sm hover:bg-gray-700"
           >
             Back to Dashboard
