@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -129,7 +129,7 @@ async function uploadToCloudinary(file: File, folder: string) {
   return (await res.json()) as { secure_url?: string; url?: string };
 }
 
-export default function BlogAdminPage() {
+function BlogAdminInner() {
   const searchParams = useSearchParams();
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
@@ -798,5 +798,13 @@ export default function BlogAdminPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function BlogAdminPage() {
+  return (
+    <Suspense fallback={<div className="p-6 text-white min-h-screen bg-gray-900">Loading...</div>}>
+      <BlogAdminInner />
+    </Suspense>
   );
 }
