@@ -3,7 +3,7 @@ import ServicesShowcase from "@/components/homeComponents/ServicesShowcase";
 import { HeroScrollVideo } from "@/components/ui/scroll-animated-video";
 import FeaturedWork from "@/components/homeComponents/FeaturedWork";
 import AboutUsSection from "@/components/homeComponents/AboutUsSection";
-import LogoLoop from "@/components/LogoLoop";
+import LogoLoop from "@/components/ui/LogoLoop";
 import { listClientLogos } from "@/lib/firestoreHelpers";
 
 const partnerLogos = [
