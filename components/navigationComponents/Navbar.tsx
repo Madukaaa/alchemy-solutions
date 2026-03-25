@@ -302,7 +302,19 @@ export default function Navbar() {
                   key={item.label}
                   href={item.href}
                   className="text-black text-6xl md:text-7xl lg:text-7xl font-black transition-colors leading-none tracking-wide"
-                  onClick={closeMenu}
+                  onClick={(e) => {
+                    closeMenu();
+                    if (item.href.startsWith("/#") && pathname === "/") {
+                      e.preventDefault();
+                      const id = item.href.replace("/#", "");
+                      const element = document.getElementById(id);
+                      if (element) {
+                        element.scrollIntoView({ behavior: "smooth" });
+                        // Update hash without reload
+                        window.history.pushState(null, "", item.href);
+                      }
+                    }
+                  }}
                 >
                   <HoverAnimatedText text={item.label} />
                 </Link>
