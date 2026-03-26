@@ -349,26 +349,16 @@ export default function Navbar() {
                   </motion.div>
 
                   <div className="space-y-4 sm:space-y-6 pb-4 flex-shrink-0">
-                    <div className="flex items-center gap-6">
-                      <div className="flex-1">
-                        <p className="uppercase tracking-[0.2em] text-[10px] font-medium text-[#E87A27] mb-2">
-                          GET IN TOUCH
-                        </p>
-                        <p className="text-lg sm:text-xl text-black font-medium">
-                          hello@alchemy.lk
-                        </p>
-                        <p className="text-gray-700 text-sm">
-                          +94 71 956 3675
-                        </p>
-                      </div>
-                      <div className="w-32 h-32 flex-shrink-0 pointer-events-none">
-                        {FooterModelComponent && !modelLoading && (
-                          <FooterModelComponent scale={2.4} positionY={-0.5} />
-                        )}
-                        {modelLoading && (
-                          <div className="w-full h-full bg-gray-100 animate-pulse rounded-full" />
-                        )}
-                      </div>
+                    <div>
+                      <p className="uppercase tracking-[0.2em] text-[10px] font-medium text-[#E87A27] mb-2">
+                        GET IN TOUCH
+                      </p>
+                      <p className="text-lg sm:text-xl text-black font-medium">
+                        hello@alchemy.lk
+                      </p>
+                      <p className="text-gray-700 text-sm">
+                        +94 71 956 3675
+                      </p>
                     </div>
 
                     <div className="flex gap-3">
