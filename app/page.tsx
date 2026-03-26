@@ -6,12 +6,7 @@ import AboutUsSection from "@/components/homeComponents/AboutUsSection";
 import LogoLoop from "@/components/ui/LogoLoop";
 import { listClientLogos } from "@/lib/firestoreHelpers";
 
-const partnerLogos = [
-  { src: "/logos/Alchemixlogo.png", alt: "Alchemix logo" },
-  { src: "/logos/Alchemy%20logo%20ai-01.png", alt: "Alchemy logo variant 1" },
-  { src: "/logos/Alchemy%20logo%20ai-02.png", alt: "Alchemy logo variant 2" },
-  { src: "/logos/Alchemypics.png", alt: "Alchemy Pictures logo" },
-];
+export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   let dbLogos: any[] = [];
@@ -21,17 +16,14 @@ export default async function Home() {
     console.error("Failed to load client logos from Firestore:", err);
   }
 
-  // Combine hardcoded logos with ones from DB, or just use DB if preferred.
-  // Here we'll show DB logos if they exist, otherwise fallback to defaults.
-  const displayLogos = dbLogos.length > 0 
-    ? dbLogos.map(l => {
-        let src = l.url;
-        if (src && !src.startsWith('http') && !src.startsWith('/logos/')) {
-          src = `/logos/${src.startsWith('/') ? src.slice(1) : src}`;
-        }
-        return { src, alt: l.alt || l.name };
-      })
-    : partnerLogos;
+  // Map database logos to the expected format
+  const displayLogos = dbLogos.map(l => {
+    let src = l.url;
+    if (src && !src.startsWith('http') && !src.startsWith('/logos/')) {
+      src = `/logos/${src.startsWith('/') ? src.slice(1) : src}`;
+    }
+    return { src, alt: l.alt || l.name };
+  });
 
   return (
     <>
