@@ -6,8 +6,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Poppins } from "next/font/google";
+import { motion, AnimatePresence } from "framer-motion";
 import FloatingCallButton from "./FloatingCallButton";
 import HoverAnimatedText from "./HoverAnimatedText";
+import FooterModel3D from "../footerComponents/FooterModel3D";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700", "800", "900"],
@@ -24,6 +26,57 @@ export default function Navbar() {
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const logoRef = useRef<HTMLAnchorElement | null>(null);
   const lastScrollYRef = useRef(0);
+
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+  const [linksLoaded, setLinksLoaded] = useState(false);
+  const [modelLoading, setModelLoading] = useState(false);
+  const [FooterModelComponent, setFooterModelComponent] = useState<any>(() => FooterModel3D);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (linksLoaded && FooterModelComponent === FooterModel3D) {
+      setModelLoading(true);
+      import("../footerComponents/FooterModel3D")
+        .then((mod) => {
+          if (!isMounted) return;
+          setFooterModelComponent(() => mod.default || mod);
+        })
+        .catch(() => {})
+        .finally(() => {
+          if (!isMounted) return;
+          setModelLoading(false);
+        });
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [linksLoaded, FooterModelComponent]);
+
+  useEffect(() => {
+    const checkDeviceType = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+
+      setIsMobile(width < 768 || (width < 900 && height < 600));
+
+      const isIPadPro =
+        (width === 1024 && height === 1366) ||
+        (width === 1366 && height === 1024);
+      const isRegularTablet =
+        width >= 768 && width < 1024 && !(width < 900 && height < 600);
+      setIsTablet(isRegularTablet || isIPadPro);
+    };
+
+    checkDeviceType();
+    window.addEventListener("resize", checkDeviceType);
+    window.addEventListener("orientationchange", checkDeviceType);
+
+    return () => {
+      window.removeEventListener("resize", checkDeviceType);
+      window.removeEventListener("orientationchange", checkDeviceType);
+    };
+  }, []);
 
   const navItems = [
     { label: "Home", href: "/" },
@@ -229,6 +282,7 @@ export default function Navbar() {
         onTransitionEnd={(event) => {
           if (event.propertyName === "clip-path" && !isOpen) {
             setIsClosing(false);
+            setLinksLoaded(false);
           }
         }}
         className={`fixed inset-0 z-50 bg-white overflow-hidden transition-[clip-path] duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] ${
@@ -237,96 +291,319 @@ export default function Navbar() {
             : "[clip-path:inset(0_0_0_100%)] pointer-events-none"
         }`}
       >
-        <div
-          className={`flex flex-col md:flex-row h-full w-full pt-32 pl-6 pr-6 md:pl-32 md:pr-20 lg:pl-40 lg:pr-24 pb-12 transition-transform duration-500 ease-out ${
-            isOpen ? "translate-x-0" : "translate-x-8"
-          } ${poppins.className}`}
-        >
-          {/* Left Side: Contact & Info */}
-          <div className="w-full md:w-1/2 flex flex-col justify-between pr-0 md:pr-12 md:max-h-[70vh] my-auto">
-            <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-8">
-              <div className="w-48 h-48 bg-gray-100 rounded-3xl hidden md:flex items-center justify-center mb-8">
-                <span className="text-gray-400 text-sm">Image Placeholder</span>
-              </div>
-
-              <div>
-                <p className="text-[#E87A27] text-xs tracking-[0.2em] font-medium uppercase mb-4">
-                  Get In Touch
-                </p>
-                <h2 className="text-black text-3xl md:text-4xl lg:text-5xl tracking-tight mb-2">
-                  hello@alchemy.lk
-                </h2>
-                <p className="text-gray-700 text-lg md:text-xl mb-6">
-                  +94 71 956 3675
-                </p>
-                <p className="text-gray-500 text-sm max-w-sm mb-12">
-                  Where creativity flows through our bloodline. We transform
-                  ideas into extraordinary digital experiences.
-                </p>
-
-                {/* Social Icons */}
-                <div className="flex justify-center md:justify-start space-x-4">
-                  <Link
-                    href="https://www.facebook.com/alchemys.lk"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="w-12 h-12 rounded-full border border-[#E87A27] text-[#E87A27] flex items-center justify-center hover:bg-[#E87A27] hover:text-white transition-colors"
-                  >
-                    <Facebook className="w-5 h-5" />
-                  </Link>
-                  <Link
-                    href="https://www.instagram.com/alchemy.lk"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="w-12 h-12 rounded-full border border-[#E87A27] text-[#E87A27] flex items-center justify-center hover:bg-[#E87A27] hover:text-white transition-colors"
-                  >
-                    <Instagram className="w-5 h-5" />
-                  </Link>
-                  <Link
-                    href="https://www.linkedin.com/company/alchemylk/"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="w-12 h-12 rounded-full border border-[#E87A27] text-[#E87A27] flex items-center justify-center hover:bg-[#E87A27] hover:text-white transition-colors"
-                  >
-                    <Linkedin className="w-5 h-5" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Side: Navigation Links */}
-          <div className="w-full md:w-1/2 flex flex-col justify-center pl-0 md:pl-24 mt-12 md:mt-0 relative">
-            <nav className="flex flex-col space-y-2 md:space-y-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="text-black text-6xl md:text-7xl lg:text-7xl font-black transition-colors leading-none tracking-wide"
-                  onClick={(e) => {
-                    closeMenu();
-                    if (item.href.startsWith("/#") && pathname === "/") {
-                      e.preventDefault();
-                      const id = item.href.replace("/#", "");
-                      const element = document.getElementById(id);
-                      if (element) {
-                        element.scrollIntoView({ behavior: "smooth" });
-                        // Update hash without reload
-                        window.history.pushState(null, "", item.href);
+        <AnimatePresence>
+          {isOpen && (
+            <div className={`h-full w-full ${poppins.className}`}>
+              {/* MOBILE VIEW */}
+              {isMobile && (
+                <div className="flex flex-col h-full justify-between px-6 py-8 relative overflow-hidden">
+                  <motion.div 
+                    className="flex flex-col space-y-1 mt-16 sm:mt-20 flex-1 min-h-0"
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                      hidden: { opacity: 0 },
+                      visible: {
+                        opacity: 1,
+                        transition: { staggerChildren: 0.06, delayChildren: 0.06 }
                       }
-                    }
-                  }}
-                >
-                  <HoverAnimatedText text={item.label} />
-                </Link>
-              ))}
-            </nav>
+                    }}
+                    onAnimationComplete={() => {
+                      if (!linksLoaded) setLinksLoaded(true);
+                    }}
+                  >
+                    {navItems.map((item, index) => (
+                      <motion.div
+                        key={index}
+                        variants={{
+                          hidden: { opacity: 0, y: -12 },
+                          visible: { 
+                            opacity: 1, 
+                            y: 0,
+                            transition: { type: 'spring', stiffness: 280, damping: 28 }
+                          }
+                        }}
+                      >
+                        <Link
+                          href={item.href}
+                          onClick={(e) => {
+                            closeMenu();
+                            if (item.href.startsWith("/#") && pathname === "/") {
+                              e.preventDefault();
+                              const id = item.href.replace("/#", "");
+                              const element = document.getElementById(id);
+                              if (element) {
+                                element.scrollIntoView({ behavior: "smooth" });
+                                window.history.pushState(null, "", item.href);
+                              }
+                            }
+                          }}
+                          className="text-left py-1.5 sm:py-2 block"
+                        >
+                          <span className="text-3xl xs:text-4xl sm:text-5xl font-extrabold text-black tracking-tight leading-tight">
+                            <HoverAnimatedText text={item.label} />
+                          </span>
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </motion.div>
 
-            <div className="mt-10 flex justify-end pr-2 md:pr-4">
-              <FloatingCallButton className="static! h-14! w-14! md:h-16! md:w-16!" />
+                  <div className="space-y-4 sm:space-y-6 pb-4 flex-shrink-0">
+                    <div className="flex items-center gap-6">
+                      <div className="flex-1">
+                        <p className="uppercase tracking-[0.2em] text-[10px] font-medium text-[#E87A27] mb-2">
+                          GET IN TOUCH
+                        </p>
+                        <p className="text-lg sm:text-xl text-black font-medium">
+                          hello@alchemy.lk
+                        </p>
+                        <p className="text-gray-700 text-sm">
+                          +94 71 956 3675
+                        </p>
+                      </div>
+                      <div className="w-24 h-24 flex-shrink-0 pointer-events-none">
+                        {FooterModelComponent && !modelLoading && (
+                          <FooterModelComponent scale={1.8} positionY={-0.5} />
+                        )}
+                        {modelLoading && (
+                          <div className="w-full h-full bg-gray-100 animate-pulse rounded-full" />
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex gap-3">
+                      {[
+                        { href: "https://www.facebook.com/alchemys.lk", Icon: Facebook, label: "Facebook" },
+                        { href: "https://www.instagram.com/alchemy.lk", Icon: Instagram, label: "Instagram" },
+                        { href: "https://www.linkedin.com/company/alchemylk/", Icon: Linkedin, label: "LinkedIn" },
+                      ].map(({ href, Icon, label }, index) => (
+                        <a
+                          key={index}
+                          href={href}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          className="flex items-center justify-center w-9 h-9 rounded-full border border-[#E87A27] text-[#E87A27] hover:scale-110 transition-transform"
+                        >
+                          <Icon size={16} />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="absolute top-5 right-6">
+                    <FloatingCallButton />
+                  </div>
+                </div>
+              )}
+
+              {/* TABLET VIEW */}
+              {isTablet && (
+                <div className="flex flex-col h-full justify-between items-center px-8 py-8 text-center relative overflow-hidden">
+                  <motion.div 
+                    className="flex flex-col space-y-3 mt-16 flex-1"
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                      hidden: { opacity: 0 },
+                      visible: {
+                        opacity: 1,
+                        transition: { staggerChildren: 0.06, delayChildren: 0.06 }
+                      }
+                    }}
+                    onAnimationComplete={() => {
+                      if (!linksLoaded) setLinksLoaded(true);
+                    }}
+                  >
+                    {navItems.map((item, index) => (
+                      <motion.div
+                        key={index}
+                        variants={{
+                          hidden: { opacity: 0, y: 12 },
+                          visible: { 
+                            opacity: 1, 
+                            y: 0,
+                            transition: { type: 'spring', stiffness: 260, damping: 22 }
+                          }
+                        }}
+                      >
+                         <Link
+                          href={item.href}
+                          onClick={(e) => {
+                            closeMenu();
+                            if (item.href.startsWith("/#") && pathname === "/") {
+                              e.preventDefault();
+                              const id = item.href.replace("/#", "");
+                              const element = document.getElementById(id);
+                              if (element) {
+                                element.scrollIntoView({ behavior: "smooth" });
+                                window.history.pushState(null, "", item.href);
+                              }
+                            }
+                          }}
+                          className="text-5xl md:text-6xl font-extrabold text-black block"
+                        >
+                          <HoverAnimatedText text={item.label} />
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+
+                  <div className="flex flex-col items-center space-y-6 mt-8">
+                    <div className="w-[150px] h-[120px] pointer-events-none">
+                      {FooterModelComponent && !modelLoading && (
+                        <FooterModelComponent scale={2.2} positionY={-1} />
+                      )}
+                      {modelLoading && (
+                        <div className="w-full h-full bg-gray-100 animate-pulse rounded" />
+                      )}
+                    </div>
+
+                    <div className="flex flex-col items-center space-y-4">
+                      <div>
+                        <p className="uppercase tracking-[0.2em] text-xs font-medium text-[#E87A27] mb-3">
+                          Get in touch
+                        </p>
+                        <p className="text-2xl md:text-3xl text-black font-medium">
+                          hello@alchemy.lk
+                        </p>
+                        <p className="text-gray-700 text-base md:text-lg mt-2">
+                          +94 (0)719 563 675
+                        </p>
+                      </div>
+
+                      <div className="flex gap-4">
+                        {[
+                          { href: "https://www.facebook.com/alchemys.lk", Icon: Facebook },
+                          { href: "https://www.instagram.com/alchemy.lk", Icon: Instagram },
+                          { href: "https://www.linkedin.com/company/alchemylk/", Icon: Linkedin },
+                        ].map(({ href, Icon }, index) => (
+                          <a
+                            key={index}
+                            href={href}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            className="flex items-center justify-center w-11 h-11 rounded-full border border-[#E87A27] text-[#E87A27] hover:scale-110 transition-transform"
+                          >
+                            <Icon size={20} />
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="absolute top-5 right-6">
+                    <FloatingCallButton />
+                  </div>
+                </div>
+              )}
+
+              {/* DESKTOP VIEW */}
+              {!isMobile && !isTablet && (
+                <div className="flex items-center justify-center h-full w-full max-w-[1440px] mx-auto px-12 lg:px-20 relative">
+                  <div className="flex flex-col lg:flex-row items-center justify-between w-full h-full py-20">
+                    <div className="flex flex-col justify-center w-full max-w-[520px] relative h-full">
+                      <div className="absolute -left-12 top-10 w-[340px] h-[360px] pointer-events-none z-0">
+                        {FooterModelComponent && !modelLoading && (
+                          <FooterModelComponent scale={6} positionY={-1} />
+                        )}
+                        {modelLoading && (
+                          <div className="w-full h-full bg-gray-100 animate-pulse rounded" />
+                        )}
+                      </div>
+
+                      <div className="mt-64 relative z-10">
+                        <p className="uppercase tracking-[0.2em] text-xs font-medium text-[#E87A27] mb-3">
+                          Get in touch
+                        </p>
+                        <p className="text-3xl md:text-4xl lg:text-5xl text-black">
+                          hello@alchemy.lk
+                        </p>
+                        <p className="text-gray-700 text-lg md:text-xl mt-2">
+                          +94 71 956 3675
+                        </p>
+                        <p className="text-sm text-gray-500 max-w-sm mt-4">
+                          Where creativity flows through our bloodline. 
+                          We transform ideas into extraordinary digital experiences.
+                        </p>
+
+                        <div className="flex gap-4 mt-8">
+                          {[
+                            { href: "https://www.facebook.com/alchemys.lk", Icon: Facebook },
+                            { href: "https://www.instagram.com/alchemy.lk", Icon: Instagram },
+                            { href: "https://www.linkedin.com/company/alchemylk/", Icon: Linkedin },
+                          ].map(({ href, Icon }, index) => (
+                            <a
+                              key={index}
+                              href={href}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                              className="w-12 h-12 rounded-full border border-[#E87A27] text-[#E87A27] flex items-center justify-center hover:bg-[#E87A27] hover:text-white transition-colors"
+                            >
+                              <Icon size={20} />
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <motion.div 
+                      className="flex flex-col space-y-3 lg:space-y-4 items-start"
+                      initial="hidden"
+                      animate="visible"
+                      onAnimationComplete={() => {
+                        if (!linksLoaded) setLinksLoaded(true);
+                      }}
+                      variants={{
+                        hidden: { opacity: 0 },
+                        visible: {
+                          opacity: 1,
+                          transition: { staggerChildren: 0.06, delayChildren: 0.06 }
+                        }
+                      }}
+                    >
+                      {navItems.map((item, index) => (
+                        <motion.div
+                          key={index}
+                          variants={{
+                            hidden: { opacity: 0, x: 20 },
+                            visible: { 
+                              opacity: 1, 
+                              x: 0,
+                              transition: { type: 'spring', stiffness: 260, damping: 22 }
+                            }
+                          }}
+                        >
+                          <Link
+                            href={item.href}
+                            onClick={(e) => {
+                              closeMenu();
+                              if (item.href.startsWith("/#") && pathname === "/") {
+                                e.preventDefault();
+                                const id = item.href.replace("/#", "");
+                                const element = document.getElementById(id);
+                                if (element) {
+                                  element.scrollIntoView({ behavior: "smooth" });
+                                  window.history.pushState(null, "", item.href);
+                                }
+                              }
+                            }}
+                            className="text-black text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-extrabold block leading-none tracking-tight"
+                          >
+                            <HoverAnimatedText text={item.label} />
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  </div>
+
+                  <div className="absolute bottom-10 right-10">
+                    <FloatingCallButton />
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        </div>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );
