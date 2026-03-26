@@ -361,9 +361,9 @@ export default function Navbar() {
                           +94 71 956 3675
                         </p>
                       </div>
-                      <div className="w-24 h-24 flex-shrink-0 pointer-events-none">
+                      <div className="w-32 h-32 flex-shrink-0 pointer-events-none">
                         {FooterModelComponent && !modelLoading && (
-                          <FooterModelComponent scale={1.8} positionY={-0.5} />
+                          <FooterModelComponent scale={2.4} positionY={-0.5} />
                         )}
                         {modelLoading && (
                           <div className="w-full h-full bg-gray-100 animate-pulse rounded-full" />
