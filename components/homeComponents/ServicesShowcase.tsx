@@ -89,13 +89,13 @@ export default function ServicesShowcase() {
 
   return (
     <section className="bg-black text-white font-sans">
-      <div className="mx-auto flex min-h-125 flex-col items-start justify-between px-6 pb-16 pt-0 md:min-h-175 md:flex-row md:px-16 md:pb-20 md:pt-4 lg:min-h-175 lg:px-20 lg:pb-24 lg:pt-6">
+      <div className="mx-auto flex min-h-[300px] flex-col items-start justify-between px-6 pb-2 pt-0 md:min-h-[400px] md:flex-row md:px-16 md:pb-4 md:pt-4 lg:min-h-[500px] lg:px-20 lg:pb-6 lg:pt-6">
         <div className="flex h-full w-full flex-col space-y-6 md:w-1/2 md:pl-6 lg:pl-12">
-          <h3 className="py-2 text-2xl font-bold text-[#E2791D] sm:text-3xl md:py-8 md:text-4xl">
+          <h3 className="py-2 text-2xl font-bold text-[#E2791D] sm:text-3xl md:py-4 md:text-4xl">
             OUR SERVICES
           </h3>
 
-          <div className="space-y-4 md:space-y-6">
+          <div className="mt-8 space-y-4 md:space-y-6">
             {services.map((service) => (
               <div
                 key={service.path}
@@ -118,16 +118,16 @@ export default function ServicesShowcase() {
               >
                 <div className="flex items-center justify-between gap-0">
                   <div className="flex-1">
-                    <p className="block pl-2 text-sm font-semibold text-white md:hidden">
+                    <p className="block text-sm font-semibold text-white md:hidden">
                       {service.subtitle}
                     </p>
 
-                    <p className="hidden pl-4 text-sm font-semibold text-white md:block md:pl-12 lg:hidden">
+                    <p className="hidden text-sm font-semibold text-white md:block lg:hidden">
                       {service.subtitle}
                     </p>
 
                     <p
-                      className={`hidden pl-4 text-sm font-semibold transition-all duration-300 md:pl-12 lg:block ${
+                      className={`hidden text-sm font-semibold transition-all duration-300 lg:block ${
                         activePath === service.path ? "text-white" : "text-gray-500"
                       }`}
                     >
@@ -190,7 +190,7 @@ export default function ServicesShowcase() {
             ))}
           </div>
 
-          <p className="mt-0 hidden max-w-md py-10 text-lg text-gray-200 md:block">
+          <p className="mt-0 hidden max-w-md pt-4 pb-0 text-lg text-gray-200 md:block">
             {currentService.description}
           </p>
         </div>
