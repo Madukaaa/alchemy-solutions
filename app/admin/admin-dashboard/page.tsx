@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -198,7 +198,7 @@ export default function AdminDashboardPage() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="flex items-center gap-4">
             <Image
-              src="/Alchemy logo ai-02.png"
+              src="/logos/Alchemy logo ai-02.png"
               alt="Alchemy"
               width={112}
               height={40}
@@ -406,3 +406,4 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
+

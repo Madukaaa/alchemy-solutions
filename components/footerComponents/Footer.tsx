@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -75,7 +75,7 @@ Australia`,
         <div className="flex-1 space-y-6 md:space-y-4 lg:space-y-6 text-center md:text-left">
           <div>
             <Image
-              src="/Alchemy logo ai-02.png"
+              src="/logos/Alchemy logo ai-02.png"
               alt="Alchemy Logo"
               width={220}
               height={64}
@@ -194,7 +194,7 @@ Australia`,
       </div>
 
       <div className="pt-8 pb-2 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 relative z-10">
-        <p>© 2025 Alchemy. All rights reserved.</p>
+        <p>Â© 2025 Alchemy. All rights reserved.</p>
         <div className="flex gap-4">
           <Link
             href="/careers"
@@ -213,3 +213,4 @@ Australia`,
     </footer>
   );
 }
+

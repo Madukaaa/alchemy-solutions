@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, X, Facebook, Instagram, Linkedin } from "lucide-react";
@@ -186,8 +186,8 @@ export default function Navbar() {
           <Image
             src={
               useLightLogo
-                ? "/Alchemy logo ai-01.png"
-                : "/Alchemy logo ai-02.png"
+                ? "/logos/Alchemy logo ai-01.png"
+                : "/logos/Alchemy logo ai-02.png"
             }
             alt="Alchemy Logo"
             width={105}
@@ -330,3 +330,4 @@ export default function Navbar() {
     </>
   );
 }
+

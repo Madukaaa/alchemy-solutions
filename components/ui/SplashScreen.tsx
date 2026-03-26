@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -33,7 +33,7 @@ export default function SplashScreen() {
       aria-hidden={stage !== "visible"}
     >
       <Image
-        src="/Alchemy logo ai-02.png"
+        src="/logos/Alchemy logo ai-02.png"
         alt="Alchemy Logo"
         width={210}
         height={70}
@@ -43,3 +43,4 @@ export default function SplashScreen() {
     </div>
   );
 }
+

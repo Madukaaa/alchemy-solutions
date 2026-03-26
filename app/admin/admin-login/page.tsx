@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -52,7 +52,7 @@ export default function AdminLoginPage() {
       <div className="max-w-2xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div className="hidden md:flex flex-col items-start gap-4 px-6">
           <Image
-            src="/Alchemy logo ai-02.png"
+            src="/logos/Alchemy logo ai-02.png"
             alt="Alchemy"
             width={224}
             height={72}
@@ -72,7 +72,7 @@ export default function AdminLoginPage() {
         >
           <div className="flex items-center gap-3 mb-4 md:hidden">
             <Image
-              src="/Alchemy logo ai-02.png"
+              src="/logos/Alchemy logo ai-02.png"
               alt="Alchemy"
               width={48}
               height={48}
@@ -134,3 +134,4 @@ export default function AdminLoginPage() {
     </div>
   );
 }
+

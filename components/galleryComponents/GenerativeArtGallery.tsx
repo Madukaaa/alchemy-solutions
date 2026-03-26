@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React from "react";
 import {
@@ -23,13 +23,13 @@ type GalleryItem = {
 const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: "asset-1",
-    image: "/Alchemy logo ai-01.png",
+    image: "/logos/Alchemy logo ai-01.png",
     title: "Alchemy Image 01",
     alt: "Alchemy gallery image 01",
   },
   {
     id: "asset-2",
-    image: "/Alchemy logo ai-02.png",
+    image: "/logos/Alchemy logo ai-02.png",
     title: "Alchemy Image 02",
     alt: "Alchemy gallery image 02",
   },
@@ -493,3 +493,4 @@ const GenerativeArtGallery = ({
 };
 
 export default GenerativeArtGallery;
+

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -19,28 +19,28 @@ const services: Service[] = [
     title: "Development",
     subtitle: "Web & Mobile",
     description: "Web & Mobile solutions without limits.",
-    image: "/Alchemy logo ai-01.png",
+    image: "/logos/Alchemy logo ai-01.png",
   },
   {
     path: "/services/production",
     title: "Production",
     subtitle: "Audio & Visual",
     description: "Bring Your Ideas to Life on\nScreen.",
-    image: "/Alchemy logo ai-02.png",
+    image: "/logos/Alchemy logo ai-02.png",
   },
   {
     path: "/services/marketing",
     title: "Marketing",
     subtitle: "Digital",
     description: "Connect. Engage.\nGrow.",
-    image: "/Alchemy logo ai-01.png",
+    image: "/logos/Alchemy logo ai-01.png",
   },
   {
     path: "/services/management",
     title: "Management",
     subtitle: "Event",
     description: "Designing seamless,\nmemorable events.",
-    image: "/Alchemy logo ai-02.png",
+    image: "/logos/Alchemy logo ai-02.png",
   },
 ];
 

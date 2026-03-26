@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
@@ -73,7 +73,7 @@ export default function AboutSection() {
               className="relative z-10"
             >
               <Image
-                src="/Alchemy logo ai-02.png"
+                src="/logos/Alchemy logo ai-02.png"
                 alt="Alchemy"
                 width={640}
                 height={220}
@@ -117,3 +117,4 @@ export default function AboutSection() {
     </div>
   );
 }
+
