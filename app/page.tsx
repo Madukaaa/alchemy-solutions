@@ -59,7 +59,7 @@ export default async function Home() {
         }
       />
       <FeaturedWork />
-      <section className="bg-black px-4 py-12 md:px-8 md:py-16" aria-label="Trusted brand logos">
+      <section className="bg-black px-4 pt-4 pb-12 md:px-8 md:py-16" aria-label="Trusted brand logos">
         <h2 className="mb-10 text-center text-2xl font-bold uppercase tracking-wide text-brand md:mb-14 md:text-4xl">
           SHOWCASING OUR BRAND TRAILBLAZERS
         </h2>
