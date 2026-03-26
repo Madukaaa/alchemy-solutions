@@ -14,7 +14,7 @@ export default function ProductionServicePage() {
       />
 
       <ProductionIntro
-        imageSrc="/Alchemypics.png"
+        imageSrc="/logos/Alchemypics.png"
         imageAlt="Alchemy Pictures"
         description="We assist businesses and individuals in telling their stories through captivating visuals, encompassing both pre-recorded videos and the dynamic power of live streaming. Our team of creative professionals combines technical expertise with artistic vision to deliver exceptional audiovisual content that resonates with your audience."
       />
@@ -26,7 +26,7 @@ export default function ProductionServicePage() {
       />
 
       <ProductionIntro
-        imageSrc="/Alchemixlogo.png"
+        imageSrc="/logos/Alchemixlogo.png"
         imageAlt="Alchemy Mix"
         description="We transform raw musical talent into sonic gold, crafting extraordinary soundscapes that resonate with audiences worldwide. Our recording label specializes in discovering and nurturing emerging artists while providing comprehensive music production services that span from initial composition to final mastering."
       />
