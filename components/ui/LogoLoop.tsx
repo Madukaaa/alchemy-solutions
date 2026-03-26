@@ -34,6 +34,8 @@ export interface LogoLoopProps {
   scaleOnHover?: boolean;
   renderItem?: (item: LogoItem, key: React.Key) => React.ReactNode;
   ariaLabel?: string;
+  mobileLogoHeight?: number;
+  mobileGap?: number;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -211,6 +213,8 @@ export const LogoLoop = React.memo<LogoLoopProps>(
     scaleOnHover = false,
     renderItem,
     ariaLabel = 'Partner logos',
+    mobileLogoHeight,
+    mobileGap,
     className,
     style
   }) => {
@@ -278,11 +282,13 @@ export const LogoLoop = React.memo<LogoLoopProps>(
     const cssVariables = useMemo(
       () =>
         ({
-          '--logoloop-gap': `${gap}px`,
-          '--logoloop-logoHeight': `${logoHeight}px`,
+          '--logoloop-gap-desktop': `${gap}px`,
+          '--logoloop-gap-mobile': `${mobileGap ?? gap * 0.4}px`,
+          '--logoloop-logoHeight-desktop': `${logoHeight}px`,
+          '--logoloop-logoHeight-mobile': `${mobileLogoHeight ?? logoHeight * 0.7}px`,
           ...(fadeOutColor && { '--logoloop-fadeColor': fadeOutColor })
         }) as React.CSSProperties,
-      [gap, logoHeight, fadeOutColor]
+      [gap, mobileGap, logoHeight, mobileLogoHeight, fadeOutColor]
     );
 
     const rootClasses = useMemo(
@@ -290,8 +296,8 @@ export const LogoLoop = React.memo<LogoLoopProps>(
         cx(
           'relative group',
           isVertical ? 'overflow-hidden h-full inline-block' : 'overflow-x-hidden',
-          '[--logoloop-gap:32px]',
-          '[--logoloop-logoHeight:28px]',
+          '[--logoloop-gap:var(--logoloop-gap-mobile)] sm:[--logoloop-gap:var(--logoloop-gap-desktop)]',
+          '[--logoloop-logoHeight:var(--logoloop-logoHeight-mobile)] sm:[--logoloop-logoHeight:var(--logoloop-logoHeight-desktop)]',
           '[--logoloop-fadeColorAuto:#ffffff]',
           'dark:[--logoloop-fadeColorAuto:#0b0b0b]',
           scaleOnHover && 'py-[calc(var(--logoloop-logoHeight)*0.1)]',
