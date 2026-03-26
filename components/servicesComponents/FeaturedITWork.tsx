@@ -76,8 +76,8 @@ export default function FeaturedITWork({
 
   if (loading) {
     return (
-      <section className="bg-black text-white py-2 font-poppins relative pt-20">
-        <div className="text-center mb-1 pt-[100px]">
+      <section className="bg-black text-white py-2 font-poppins relative pt-10">
+        <div className="text-center mb-16 pt-[100px]">
           <h2 className="text-2xl md:text-4xl font-bold text-brand tracking-wide text-center uppercase">
             {title}
           </h2>
@@ -98,8 +98,8 @@ export default function FeaturedITWork({
   const activeMediaData = featuredItems[activeMediaIndex % featuredItems.length] || featuredItems[0];
 
   return (
-    <section className="bg-black text-white py-2 pb-0 font-poppins relative pt-20">
-      <div className="text-center mb-1">
+    <section className="bg-black text-white py-2 pb-0 font-poppins relative pt-10">
+      <div className="text-center mb-16">
         <h2 className="text-2xl md:text-4xl font-bold text-brand tracking-wide text-center uppercase">
           {title}
         </h2>

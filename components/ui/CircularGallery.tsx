@@ -299,11 +299,12 @@ class Media {
     if (viewport) this.viewport = viewport;
 
     const isMobile = this.screen.width < 768;
-    const cards = isMobile ? 1 : this.cardsOnScreen;
-    const gapPx = isMobile ? 12 : this.gapPx;
+    const isTablet = this.screen.width >= 768 && this.screen.width < 1280;
+    const cards = isMobile ? 1 : isTablet ? 1.5 : this.cardsOnScreen;
+    const gapPx = isMobile ? 12 : isTablet ? 40 : this.gapPx;
 
     const cardWidthPxBase = (this.screen.width - gapPx * (cards - 1)) / cards;
-    const cardWidthPx = isMobile ? cardWidthPxBase * 0.8 : cardWidthPxBase * 0.92;
+    const cardWidthPx = isMobile ? cardWidthPxBase * 0.8 : isTablet ? cardWidthPxBase * 0.95 : cardWidthPxBase * 0.92;
     const cardHeightPx = cardWidthPx / 1.56;
 
     const worldPerPxX = this.viewport.width / this.screen.width;
@@ -627,7 +628,7 @@ export default function CircularGallery({
     <section className="h-full w-full bg-black flex flex-col justify-center">
       <div ref={containerRef} className="h-[50%] min-h-[300px] w-full overflow-hidden cursor-grab active:cursor-grabbing" />
 
-      <div className="mx-auto px-5 pb-4 pt-0 text-center sm:pt-2 md:pb-24" style={captionStyle}>
+      <div className="mx-auto px-5 pb-4 pt-0 text-center sm:pt-2 md:pb-12" style={captionStyle}>
         <h3 className="text-lg font-bold tracking-wider text-brand md:text-2xl">
           {activeItem.title}
         </h3>
