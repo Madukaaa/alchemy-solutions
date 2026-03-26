@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/navigationComponents/Navbar";
 import PageTransition from "@/components/ui/PageTransition";
 import SplashScreen from "@/components/ui/SplashScreen";
+import Footer from "@/components/footerComponents/Footer";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -48,6 +49,7 @@ export default function RootLayout({
         <SplashScreen />
         <Navbar />
         <PageTransition>{children}</PageTransition>
+        <Footer />
       </body>
     </html>
   );

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, X, Facebook, Instagram, Linkedin } from "lucide-react";
@@ -170,7 +170,8 @@ export default function Navbar() {
   const isAdminRoute =
     pathname.startsWith("/admin") ||
     pathname.includes("-admin") ||
-    pathname.includes("/admin-");
+    pathname.includes("/admin-") ||
+    pathname === "/privacy-policy";
 
   if (isAdminRoute) {
     return null;
