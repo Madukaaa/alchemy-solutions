@@ -23,7 +23,13 @@ export default function Footer() {
   const pathname = usePathname();
   const [isDesktop, setIsDesktop] = useState<boolean>(false);
 
-  if (pathname === "/privacy-policy") return null;
+  const isAdminRoute =
+    pathname.startsWith("/admin") ||
+    pathname.includes("-admin") ||
+    pathname.includes("/admin-") ||
+    pathname === "/privacy-policy";
+
+  if (isAdminRoute) return null;
 
   // ✅ Detect screen size on mount and resize
   useEffect(() => {

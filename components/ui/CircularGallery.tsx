@@ -625,7 +625,7 @@ export default function CircularGallery({
 
   return (
     <section className="h-full w-full bg-black flex flex-col justify-center">
-      <div ref={containerRef} className="h-[55%] min-h-[250px] w-full overflow-hidden cursor-grab active:cursor-grabbing" />
+      <div ref={containerRef} className="h-[50%] min-h-[300px] w-full overflow-hidden cursor-grab active:cursor-grabbing" />
 
       <div className="mx-auto px-5 pb-16 pt-0 text-center sm:pt-2 md:pb-24" style={captionStyle}>
         <h3 className="text-lg font-bold tracking-wider text-brand md:text-2xl">

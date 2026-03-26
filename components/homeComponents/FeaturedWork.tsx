@@ -77,7 +77,7 @@ export default function FeaturedWork({
   if (loading) {
     return (
       <section className="bg-black text-white py-2 font-poppins relative pt-20">
-        <div className="text-center mb-1 pt-[100px]">
+        <div className="text-center mb-8 pt-[100px]">
           <h2 className="text-2xl md:text-4xl font-bold text-brand tracking-wide text-center">
             {title}
           </h2>
@@ -99,7 +99,7 @@ export default function FeaturedWork({
 
   return (
     <section className="bg-black text-white py-2 pb-0 font-poppins relative pt-20">
-      <div className="text-center mb-1">
+      <div className="text-center mb-8 sm:mb-1">
         <h2 className="text-2xl md:text-4xl font-bold text-brand tracking-wide text-center">
           {title}
         </h2>
@@ -112,7 +112,7 @@ export default function FeaturedWork({
         {/* Carousel Container - Fixed height with bottom margin */}
         <div
           ref={cardsContainerRef}
-          className="relative h-72 sm:h-[600px]" // mobile small, larger screens keep 600px
+          className="relative h-[400px] py-8 sm:py-0 sm:h-[600px]" // mobile larger, larger screens keep 600px
         >
           <CircularGallery
             items={featuredItems}
