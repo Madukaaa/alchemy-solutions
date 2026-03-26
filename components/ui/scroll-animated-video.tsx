@@ -309,6 +309,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
 
       // Animate the container to expand
       mainTl
+        .to({}, { duration: 0.2 }) // Deliberate pause at the "stopped" point
         .to(
           container,
           {
@@ -317,7 +318,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
             borderRadius: target.borderRadius,
             ease: containerEase,
           },
-          0
+          0.2
         )
         // Darken as it expands
         .to(
@@ -326,7 +327,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
             backgroundColor: "rgba(0,0,0,0.4)",
             ease: "power2.out",
           },
-          0,
+          0.2,
         )
         // Reveal overlay panel
         .to(
@@ -602,8 +603,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
           top: 0;
           height: 100vh;
           display: grid;
-          place-items: start center;
-          padding-top: clamp(8px, 2vw, 24px);
+          place-items: center;
         }
 
         .hsv-media {
@@ -732,11 +732,9 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
           .hsv-sticky.is-sticky {
             padding: 1rem;
             box-sizing: border-box;
-            height: 50vh;
+            height: 100vh;
             display: grid;
             place-items: center;
-            justify-content: center;
-            align-items: center;
           }
           
           /* Ensure video maintains aspect ratio on mobile */
