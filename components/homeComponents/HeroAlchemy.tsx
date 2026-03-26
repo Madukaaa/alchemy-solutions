@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 
 export default function HeroAlchemy() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start bg-black font-sans">
-      <LampContainer className="justify-start pt-64 md:pt-80">
+    <main className="flex min-h-auto md:min-h-screen flex-col items-center justify-start bg-black font-sans">
+      <LampContainer className="justify-start pt-10 md:pt-64">
         <motion.div
           initial={{ opacity: 0.5, y: 100 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -15,7 +15,7 @@ export default function HeroAlchemy() {
             duration: 0.8,
             ease: "easeInOut",
           }}
-          className="flex flex-col items-center justify-center text-center mt-56 md:mt-72 z-50"
+          className="flex flex-col items-center justify-center text-center mt-6 md:mt-56 z-50"
         >
           <h1 className="text-white text-7xl md:text-9xl lg:text-[11rem] font-bold uppercase tracking-tight leading-[0.9] translate-y-6 md:translate-y-8">
             We Are
