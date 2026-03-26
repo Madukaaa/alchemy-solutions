@@ -34,6 +34,8 @@ export interface LogoLoopProps {
   scaleOnHover?: boolean;
   renderItem?: (item: LogoItem, key: React.Key) => React.ReactNode;
   ariaLabel?: string;
+  mobileLogoHeight?: number;
+  mobileGap?: number;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -209,6 +211,8 @@ export const LogoLoop = React.memo<LogoLoopProps>(
     scaleOnHover = false,
     renderItem,
     ariaLabel = 'Partner logos',
+    mobileLogoHeight,
+    mobileGap,
     className,
     style
   }) => {

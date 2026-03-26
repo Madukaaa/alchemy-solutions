@@ -70,11 +70,14 @@ export type HeroScrollVideoProps = {
 ========================= */
 
 const DEFAULTS = {
-  initialBoxSize: 360,
+  // initial size will scale with viewport width:
+  // minimum 280px, preferred ~50vw, maximum 600px
+  initialBoxSize: "clamp(280px, 50vw, 600px)",
+
   targetSize: "fullscreen" as const,
   scrollHeightVh: 280,
   overlayBlur: 10,
-  overlayRevealDelay: 0.35,
+  overlayRevealDelay: 0.5,
   eases: {
     container: "expo.out",
     overlay: "expo.out",
@@ -150,7 +153,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
   // Inline CSS variables for tuning (non-theme)
   const cssVars: CSSProperties = useMemo(
     () => ({
-      ["--initial-size" as any]: `${initialBoxSize}px`,
+      ["--initial-size" as any]: typeof initialBoxSize === "number" ? `${initialBoxSize}px` : initialBoxSize,
       ["--overlay-blur" as any]: `${overlayBlur}px`,
     }),
     [initialBoxSize, overlayBlur],
@@ -293,8 +296,6 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
 
       // Initial states
       gsap.set(container, {
-        width: initialBoxSize,
-        height: initialBoxSize,
         borderRadius: 20,
         filter: "none",
         clipPath: "inset(0 0 0 0)",
@@ -308,6 +309,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
 
       // Animate the container to expand
       mainTl
+        .to({}, { duration: 0.2 }) // Deliberate pause at the "stopped" point
         .to(
           container,
           {
@@ -316,7 +318,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
             borderRadius: target.borderRadius,
             ease: containerEase,
           },
-          0,
+          0.2
         )
         // Darken as it expands
         .to(
@@ -325,7 +327,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
             backgroundColor: "rgba(0,0,0,0.4)",
             ease: "power2.out",
           },
-          0,
+          0.2,
         )
         // Reveal overlay panel
         .to(
@@ -448,7 +450,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
         loop={loop}
         playsInline={playsInline}
         autoPlay={autoPlay || muted}
-        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        className="hsv-video-el"
       >
         {sources}
       </video>
@@ -601,8 +603,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
           top: 0;
           height: 100vh;
           display: grid;
-          place-items: start center;
-          padding-top: clamp(8px, 2vw, 24px);
+          place-items: center;
         }
 
         .hsv-media {
@@ -616,6 +617,19 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
           place-items: center;
           transition: border-radius 0.3s ease;
           box-shadow: var(--shadow);
+        }
+
+        .hsv-video-el {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+          .hsv-video-el {
+            object-fit: contain;
+            object-position: top;
+          }
         }
 
         .hsv-overlay {
@@ -666,26 +680,120 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
           text-wrap: balance;
           position: relative;
         }
+        @media (max-width: 768px) {
+          .hsv-overlay-content h3 {
+            font-size: clamp(16px, 3.5vw, 24px);
+            padding: 10px 0px 0px;
+          }
+        }
         .hsv-overlay-content h3::after {
           content: "";
           display: block;
-          width: 72px;
-          height: 3px;
+          width: 50px;
+          height: 2px;
           border-radius: 999px;
-          margin: 10px auto 0 auto;
+          margin: 8px auto 0 auto;
           background: linear-gradient(90deg, var(--accent), var(--accent-2));
           opacity: 0.9;
         }
         .hsv-overlay-content p {
-          font-size: clamp(15px, 2.1vw, 19px);
-          line-height: 1.75;
+          font-size: clamp(14px, 2.1vw, 17px);
+          line-height: 1.6;
           margin: 0;
           color: #f3f4f6; /* better contrast over video */
           opacity: 0.95;
         }
+        @media (max-width: 768px) {
+          .hsv-overlay-content p {
+            font-size: clamp(11px, 2.5vw, 13px);
+            line-height: 1.5;
+          }
+        }
 
         @media (max-width: 900px) {
           .hsv-overlay-content { max-width: 40ch; }
+        }
+
+        /* Mobile-specific styles for 1080p ratio video display */
+        @media (max-width: 640px) {
+          .hsv-scroll {
+            height: 120vh !important; /* Reduce dark gap on mobile */
+          }
+          
+          .hsv-media {
+            width: calc(100vw - 2rem) !important;
+            height: calc((100vw - 2rem) * 9 / 16) !important;
+            max-width: 90vw !important;
+            max-height: calc(90vw * 9 / 16) !important;
+            margin: 0 auto;
+            border-radius: 12px;
+          }
+          
+          .hsv-sticky.is-sticky {
+            padding: 1rem;
+            box-sizing: border-box;
+            height: 100vh;
+            display: grid;
+            place-items: center;
+          }
+          
+          /* Ensure video maintains aspect ratio on mobile */
+          .hsv-video-el {
+            object-fit: contain !important;
+          }
+
+          .hsv-title {
+            font-size: clamp(28px, 9vw, 36px) !important;
+            margin-bottom: 0.5rem;
+          }
+          .hsv-subtitle {
+            font-size: 13px !important;
+            margin-bottom: 0.8rem;
+          }
+          .hsv-credits {
+            font-size: 11px !important;
+            margin-top: 0.5rem;
+          }
+        }
+
+        /* Extra small mobile devices */
+        @media (max-width: 475px) {
+          .hsv-scroll {
+            height: 110vh !important; /* Further reduce scroll height on smaller mobile */
+          }
+          
+          .hsv-media {
+            width: calc(100vw - 1.5rem) !important;
+            height: calc((100vw - 1.5rem) * 9 / 16) !important;
+            max-width: 92vw !important;
+            max-height: calc(92vw * 9 / 16) !important;
+            margin: 0.75rem;
+            border-radius: 10px;
+          }
+          
+          .hsv-sticky.is-sticky {
+            padding: 0.75rem;
+          }
+        }
+
+        /* Very small mobile devices */
+        @media (max-width: 375px) {
+          .hsv-scroll {
+            height: 100vh !important; /* Minimize scroll height on very small screens */
+          }
+          
+          .hsv-media {
+            width: calc(100vw - 1rem) !important;
+            height: calc((100vw - 1rem) * 9 / 16) !important;
+            max-width: 95vw !important;
+            max-height: calc(95vw * 9 / 16) !important;
+            margin: 0.5rem;
+            border-radius: 8px;
+          }
+          
+          .hsv-sticky.is-sticky {
+            padding: 0.5rem;
+          }
         }
       `}</style>
     </div>

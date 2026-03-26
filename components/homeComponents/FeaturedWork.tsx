@@ -108,11 +108,11 @@ export default function FeaturedWork({
         </p>
       </div>
 
-      <div className="relative min-h-[35rem] sm:min-h-[600px]">
+      <div className="relative min-h-[28rem] sm:min-h-[600px]">
         {/* Carousel Container - Fixed height with bottom margin */}
         <div
           ref={cardsContainerRef}
-          className="relative h-[400px] py-8 sm:py-0 sm:h-[600px]" // mobile larger, larger screens keep 600px
+          className="relative h-[350px] py-8 sm:py-0 sm:h-[600px]" // mobile larger, larger screens keep 600px
         >
           <CircularGallery
             items={featuredItems}
