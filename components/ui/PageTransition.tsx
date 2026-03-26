@@ -22,6 +22,14 @@ function FrozenRouter({ children }: { children: ReactNode }) {
 
 export default function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const isAdminRoute =
+    pathname.startsWith("/admin") ||
+    pathname.includes("-admin") ||
+    pathname.includes("/admin-") ||
+    pathname === "/privacy-policy";
+
+  if (isAdminRoute) return <>{children}</>;
+
   const colors = ["#F5A25C", "#E2791D", "#B95416"]; // light, main, dark
 
   return (

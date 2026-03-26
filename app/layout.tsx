@@ -49,7 +49,7 @@ export default function RootLayout({
         <SplashScreen />
         <Navbar />
         <PageTransition>{children}</PageTransition>
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
