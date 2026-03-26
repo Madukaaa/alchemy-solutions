@@ -478,7 +478,7 @@ class App {
   onTouchMove(e: MouseEvent | TouchEvent) {
     if (!this.isDown) return;
     const x = "touches" in e ? e.touches[0].clientX : e.clientX;
-    const distance = (this.start - x) * (this.scrollSpeed * 0.02);
+    const distance = (this.start - x) * 0.4; // Reduced from 0.7 to 0.4
     this.scroll.target = (this.scroll.position ?? 0) + distance;
   }
 
@@ -489,8 +489,9 @@ class App {
 
   onWheel(e: Event) {
     const wheelEvent = e as WheelEvent;
-    const delta = wheelEvent.deltaY || (wheelEvent as any).wheelDelta || (wheelEvent as any).detail;
-    this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
+    // Use deltaY directly for smooth/proportional scrolling
+    const delta = wheelEvent.deltaY;
+    this.scroll.target += delta * (this.scrollSpeed * 0.03); // Reduced from 0.1 to 0.03
     this.onCheckDebounce();
   }
 
@@ -550,28 +551,29 @@ class App {
     this.boundOnTouchMove = this.onTouchMove.bind(this);
     this.boundOnTouchUp = this.onTouchUp.bind(this);
 
+    this.container.addEventListener("mousewheel", this.boundOnWheel, { passive: true });
+    this.container.addEventListener("wheel", this.boundOnWheel, { passive: true });
+    this.container.addEventListener("mousedown", this.boundOnTouchDown);
+    this.container.addEventListener("mousemove", this.boundOnTouchMove);
+    this.container.addEventListener("mouseup", this.boundOnTouchUp);
+    this.container.addEventListener("touchstart", this.boundOnTouchDown, { passive: true });
+    this.container.addEventListener("touchmove", this.boundOnTouchMove, { passive: true });
+    this.container.addEventListener("touchend", this.boundOnTouchUp, { passive: true });
+    
     window.addEventListener("resize", this.boundOnResize);
-    window.addEventListener("mousewheel", this.boundOnWheel);
-    window.addEventListener("wheel", this.boundOnWheel);
-    window.addEventListener("mousedown", this.boundOnTouchDown);
-    window.addEventListener("mousemove", this.boundOnTouchMove);
-    window.addEventListener("mouseup", this.boundOnTouchUp);
-    window.addEventListener("touchstart", this.boundOnTouchDown);
-    window.addEventListener("touchmove", this.boundOnTouchMove);
-    window.addEventListener("touchend", this.boundOnTouchUp);
   }
 
   destroy() {
     window.cancelAnimationFrame(this.raf);
     window.removeEventListener("resize", this.boundOnResize);
-    window.removeEventListener("mousewheel", this.boundOnWheel);
-    window.removeEventListener("wheel", this.boundOnWheel);
-    window.removeEventListener("mousedown", this.boundOnTouchDown);
-    window.removeEventListener("mousemove", this.boundOnTouchMove);
-    window.removeEventListener("mouseup", this.boundOnTouchUp);
-    window.removeEventListener("touchstart", this.boundOnTouchDown);
-    window.removeEventListener("touchmove", this.boundOnTouchMove);
-    window.removeEventListener("touchend", this.boundOnTouchUp);
+    this.container.removeEventListener("mousewheel", this.boundOnWheel);
+    this.container.removeEventListener("wheel", this.boundOnWheel);
+    this.container.removeEventListener("mousedown", this.boundOnTouchDown);
+    this.container.removeEventListener("mousemove", this.boundOnTouchMove);
+    this.container.removeEventListener("mouseup", this.boundOnTouchUp);
+    this.container.removeEventListener("touchstart", this.boundOnTouchDown);
+    this.container.removeEventListener("touchmove", this.boundOnTouchMove);
+    this.container.removeEventListener("touchend", this.boundOnTouchUp);
 
     if (this.renderer?.gl?.canvas?.parentNode) {
       this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas as HTMLCanvasElement);

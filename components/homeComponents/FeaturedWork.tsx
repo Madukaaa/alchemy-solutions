@@ -119,8 +119,8 @@ export default function FeaturedWork({
             bend={0}
             borderRadius={0.05}
             // @ts-ignore
-            scrollEase={0.02}
-            scrollSpeed={2}
+            scrollEase={0.015}
+            scrollSpeed={0.8}
           />
         </div>
       </div>

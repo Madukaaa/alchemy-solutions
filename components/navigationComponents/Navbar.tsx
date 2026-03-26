@@ -23,6 +23,7 @@ export default function Navbar() {
   const [useLightLogo, setUseLightLogo] = useState(false);
   const [isHiddenByGallery, setIsHiddenByGallery] = useState(false);
   const [isHiddenByScroll, setIsHiddenByScroll] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const logoRef = useRef<HTMLAnchorElement | null>(null);
   const lastScrollYRef = useRef(0);
@@ -205,11 +206,18 @@ export default function Navbar() {
           lastScrollYRef.current = currentScrollY;
         }
 
+        setIsScrolled(currentScrollY > 10);
+
         isTicking = false;
       });
     };
 
+    const handleInitialScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
     lastScrollYRef.current = window.scrollY;
+    handleInitialScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
@@ -233,7 +241,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-60 flex items-center justify-between px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24 2xl:px-32 py-6 bg-transparent transition-all duration-300 ${shouldHideNavbar ? "pointer-events-none opacity-0 -translate-y-full" : "opacity-100 translate-y-0"} ${poppins.className}`}
+        className={`fixed top-0 left-0 right-0 z-60 flex items-center justify-between px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24 2xl:px-32 transition-all duration-500 ${isScrolled ? "py-4 bg-black/20 backdrop-blur-md" : "py-6 bg-transparent"} ${shouldHideNavbar ? "pointer-events-none opacity-0 -translate-y-full" : "opacity-100 translate-y-0"} ${poppins.className}`}
       >
         {/* Logo */}
         <Link href="/" className="flex items-center" ref={logoRef}>
