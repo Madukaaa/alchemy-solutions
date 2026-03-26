@@ -54,7 +54,7 @@ export default async function Home() {
       />
       <FeaturedWork />
       <section className="bg-black px-4 py-12 md:px-8 md:py-16" aria-label="Trusted brand logos">
-        <h2 className="mb-10 text-center text-3xl font-bold uppercase tracking-wide text-brand md:mb-14 md:text-4xl">
+        <h2 className="mb-10 text-center text-2xl font-bold uppercase tracking-wide text-brand md:mb-14 md:text-4xl">
           SHOWCASING OUR BRAND TRAILBLAZERS
         </h2>
         <LogoLoop logos={displayLogos} speed={90} logoHeight={60} gap={120} scaleOnHover />
