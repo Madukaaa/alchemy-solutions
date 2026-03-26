@@ -24,7 +24,13 @@ export default async function Home() {
   // Combine hardcoded logos with ones from DB, or just use DB if preferred.
   // Here we'll show DB logos if they exist, otherwise fallback to defaults.
   const displayLogos = dbLogos.length > 0 
-    ? dbLogos.map(l => ({ src: l.url, alt: l.alt || l.name }))
+    ? dbLogos.map(l => {
+        let src = l.url;
+        if (src && !src.startsWith('http') && !src.startsWith('/logos/')) {
+          src = `/logos/${src.startsWith('/') ? src.slice(1) : src}`;
+        }
+        return { src, alt: l.alt || l.name };
+      })
     : partnerLogos;
 
   return (
