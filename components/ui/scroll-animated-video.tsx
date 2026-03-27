@@ -287,7 +287,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
         if (targetSize === "fullscreen") {
           return {
             width: window.innerWidth <= 768 ? "100vw" : "92vw",
-            height: window.innerWidth <= 768 ? "100dvh" : "92vh",
+            height: window.innerWidth <= 768 ? "auto" : "92vh",
             borderRadius: 0,
           };
         }
@@ -304,7 +304,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
         filter: "none",
         clipPath: "inset(0 0 0 0)",
         width: "var(--initial-size)",
-        height: "var(--initial-size)",
+        height: window.innerWidth <= 768 ? "auto" : "var(--initial-size)",
       });
       gsap.set(overlayEl, { clipPath: "inset(100% 0 0 0)" });
       gsap.set(overlayContent, {
@@ -643,7 +643,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
         @media (max-width: 768px) {
           .hsv-video-el {
             object-fit: contain;
-            object-position: top;
+            object-position: center;
           }
         }
 
@@ -765,7 +765,9 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
             margin-top: 0.8rem;
           }
           .hsv-media {
-            --initial-size: clamp(240px, 70vw, 400px);
+            height: auto !important;
+            aspect-ratio: 16 / 9;
+            --initial-size: clamp(180px, 60vw, 300px);
           }
           .hsv-overlay-content h3 {
             font-size: clamp(20px, 6vw, 32px);
@@ -783,7 +785,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
             font-size: clamp(28px, 15vw, 44px);
           }
           .hsv-media {
-            --initial-size: clamp(200px, 85vw, 320px);
+            --initial-size: clamp(150px, 50vw, 240px);
           }
           .hsv-scroll {
             height: 180vh !important; /* more scroll space for mobile */
