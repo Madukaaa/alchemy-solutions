@@ -241,7 +241,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-60 flex items-center justify-between px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24 2xl:px-32 transition-all duration-500 ${isScrolled ? "py-4 bg-black/20 backdrop-blur-md" : "py-6 bg-transparent"} ${shouldHideNavbar ? "pointer-events-none opacity-0 -translate-y-full" : "opacity-100 translate-y-0"} ${poppins.className}`}
+        className={`fixed top-0 left-0 right-0 z-60 flex items-center justify-between px-5 sm:px-8 md:px-12 lg:px-16 xl:px-24 2xl:px-32 transition-all duration-500 ${isScrolled || isMenuVisible ? "py-4" : "py-6"} ${isScrolled && !isMenuVisible ? "bg-black/20 backdrop-blur-md" : "bg-transparent"} ${shouldHideNavbar ? "pointer-events-none opacity-0 -translate-y-full" : "opacity-100 translate-y-0"} ${poppins.className}`}
       >
         {/* Logo */}
         <Link href="/" className="flex items-center" ref={logoRef}>
@@ -509,7 +509,7 @@ export default function Navbar() {
                         )}
                       </div>
 
-                      <div className="mt-64 relative z-10">
+                      <div className="mt-80 relative z-10">
                         <p className="uppercase tracking-[0.2em] text-xs font-medium text-[#E87A27] mb-3">
                           Get in touch
                         </p>

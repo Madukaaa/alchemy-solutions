@@ -26,6 +26,7 @@ export interface LogoLoopProps {
   direction?: 'left' | 'right' | 'up' | 'down';
   width?: number | string;
   logoHeight?: number;
+  logoWidth?: number;
   gap?: number;
   pauseOnHover?: boolean;
   hoverSpeed?: number;
@@ -35,6 +36,7 @@ export interface LogoLoopProps {
   renderItem?: (item: LogoItem, key: React.Key) => React.ReactNode;
   ariaLabel?: string;
   mobileLogoHeight?: number;
+  mobileLogoWidth?: number;
   mobileGap?: number;
   className?: string;
   style?: React.CSSProperties;
@@ -205,6 +207,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
     direction = 'left',
     width = '100%',
     logoHeight = 28,
+    logoWidth,
     gap = 32,
     pauseOnHover,
     hoverSpeed,
@@ -212,6 +215,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
     renderItem,
     ariaLabel = 'Partner logos',
     mobileLogoHeight,
+    mobileLogoWidth,
     mobileGap,
     className,
     style
@@ -281,9 +285,10 @@ export const LogoLoop = React.memo<LogoLoopProps>(
       () =>
         ({
           '--logoloop-gap': `${gap}px`,
-          '--logoloop-logoHeight': `${logoHeight}px`
+          '--logoloop-logoHeight': `${logoHeight}px`,
+          '--logoloop-logoWidth': logoWidth ? `${logoWidth}px` : 'auto'
         }) as React.CSSProperties,
-      [gap, logoHeight]
+      [gap, logoHeight, logoWidth]
     );
 
     const rootClasses = useMemo(
@@ -294,6 +299,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
           isVertical ? 'overflow-hidden h-full inline-block' : 'overflow-x-hidden',
           '[--logoloop-gap:0px]',
           '[--logoloop-logoHeight:28px]',
+          '[--logoloop-logoWidth:auto]',
           scaleOnHover && 'py-[calc(var(--logoloop-logoHeight)*0.1)]',
           className
         ),
@@ -330,7 +336,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
         const content = isNodeItem ? (
           <span
             className={cx(
-              'inline-flex items-center',
+              'inline-flex items-center w-[var(--logoloop-logoWidth)]',
               'motion-reduce:transition-none',
               scaleOnHover &&
                 'transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/item:scale-120'
@@ -342,7 +348,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
         ) : (
           <img
             className={cx(
-              'h-[var(--logoloop-logoHeight)] w-auto block object-contain',
+              'h-[var(--logoloop-logoHeight)] w-[var(--logoloop-logoWidth)] block object-contain',
               '[-webkit-user-drag:none] pointer-events-none',
               '[image-rendering:-webkit-optimize-contrast]',
               'motion-reduce:transition-none',
