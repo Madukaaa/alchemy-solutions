@@ -120,7 +120,7 @@ export default function FeaturedITWork({
             borderRadius={0.05}
             // @ts-ignore
             scrollEase={0.02}
-            scrollSpeed={2}
+            scrollSpeed={0.8}
           />
         </div>
       </div>

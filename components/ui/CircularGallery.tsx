@@ -182,7 +182,7 @@ class Media {
         void main() {
           vUv = uv;
           vec3 p = position;
-          p.z = (sin(p.x * 3.0 + uTime) * 0.15 + cos(p.y * 2.0 + uTime) * 0.15) * (0.02 + abs(uSpeed) * 0.08);
+          p.z = (sin(p.x * 4.0 + uTime) * 1.0 + cos(p.y * 2.0 + uTime) * 1.0) * (0.05 + abs(uSpeed) * 0.3);
           gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
         }
       `,
@@ -272,7 +272,7 @@ class Media {
     }
 
     this.speed = scroll.current - scroll.last;
-    this.program.uniforms.uTime.value += 0.03;
+    this.program.uniforms.uTime.value += 0.04;
     this.program.uniforms.uSpeed.value = this.speed;
 
     const planeOffset = this.plane.scale.x / 2;
@@ -301,7 +301,7 @@ class Media {
     const isMobile = this.screen.width < 768;
     const isTablet = this.screen.width >= 768 && this.screen.width < 1280;
     const cards = isMobile ? 1 : isTablet ? 1.5 : this.cardsOnScreen;
-    const gapPx = isMobile ? 12 : isTablet ? 40 : this.gapPx;
+    const gapPx = isMobile ? 20 : isTablet ? 60 : this.gapPx;
 
     const cardWidthPxBase = (this.screen.width - gapPx * (cards - 1)) / cards;
     const cardWidthPx = isMobile ? cardWidthPxBase * 0.8 : isTablet ? cardWidthPxBase * 0.95 : cardWidthPxBase * 0.92;
@@ -422,8 +422,8 @@ class App {
 
   createGeometry() {
     this.planeGeometry = new Plane(this.gl, {
-      heightSegments: 40,
-      widthSegments: 72,
+      heightSegments: 50,
+      widthSegments: 100,
     });
   }
 
@@ -478,7 +478,7 @@ class App {
   onTouchMove(e: MouseEvent | TouchEvent) {
     if (!this.isDown) return;
     const x = "touches" in e ? e.touches[0].clientX : e.clientX;
-    const distance = (this.start - x) * 0.4; // Reduced from 0.7 to 0.4
+    const distance = (this.start - x) * 0.2; // Reduced from 0.4 to 0.2
     this.scroll.target = (this.scroll.position ?? 0) + distance;
   }
 
@@ -491,7 +491,7 @@ class App {
     const wheelEvent = e as WheelEvent;
     // Use deltaY directly for smooth/proportional scrolling
     const delta = wheelEvent.deltaY;
-    this.scroll.target += delta * (this.scrollSpeed * 0.03); // Reduced from 0.1 to 0.03
+    this.scroll.target += delta * (this.scrollSpeed * 0.015); // Reduced from 0.03 to 0.015
     this.onCheckDebounce();
   }
 
@@ -595,10 +595,10 @@ export default function CircularGallery({
   items,
   bend = 0.8,
   borderRadius = 0.055,
-  scrollSpeed = 2.2,
+  scrollSpeed = 1.2,
   scrollEase = 0.06,
   cardsOnScreen = 3,
-  gapPx = 24,
+  gapPx = 40,
 }: CircularGalleryProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const data = useMemo(() => normalizeItems(items), [items]);
