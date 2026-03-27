@@ -55,7 +55,17 @@ export default async function Home() {
         <h2 className="mb-10 text-center text-2xl font-bold uppercase tracking-wide text-brand md:mb-14 md:text-4xl">
           SHOWCASING OUR BRAND TRAILBLAZERS
         </h2>
-        <LogoLoop logos={displayLogos} speed={90} logoHeight={60} logoWidth={200} gap={120} scaleOnHover className="py-6 md:py-8" />
+        <LogoLoop 
+          logos={displayLogos} 
+          speed={90} 
+          logoHeight={60} 
+          logoWidth={200} 
+          gap={120} 
+          mobileLogoHeight={30}
+          mobileGap={32}
+          scaleOnHover 
+          className="py-6 md:py-8" 
+        />
       </section>
       <AboutUsSection />
     </>

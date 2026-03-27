@@ -284,11 +284,14 @@ export const LogoLoop = React.memo<LogoLoopProps>(
     const cssVariables = useMemo(
       () =>
         ({
-          '--logoloop-gap': `${gap}px`,
-          '--logoloop-logoHeight': `${logoHeight}px`,
-          '--logoloop-logoWidth': logoWidth ? `${logoWidth}px` : 'auto'
+          '--logoloop-desktop-gap': `${gap}px`,
+          '--logoloop-desktop-logoHeight': `${logoHeight}px`,
+          '--logoloop-desktop-logoWidth': logoWidth ? `${logoWidth}px` : 'auto',
+          '--logoloop-mobile-gap': `${mobileGap ?? gap}px`,
+          '--logoloop-mobile-logoHeight': `${mobileLogoHeight ?? logoHeight}px`,
+          '--logoloop-mobile-logoWidth': mobileLogoWidth ? `${mobileLogoWidth}px` : (logoWidth ? `${logoWidth}px` : 'auto')
         }) as React.CSSProperties,
-      [gap, logoHeight, logoWidth]
+      [gap, logoHeight, logoWidth, mobileGap, mobileLogoHeight, mobileLogoWidth]
     );
 
     const rootClasses = useMemo(
@@ -297,9 +300,9 @@ export const LogoLoop = React.memo<LogoLoopProps>(
           'relative group',
           'bg-white',
           isVertical ? 'overflow-hidden h-full inline-block' : 'overflow-x-hidden',
-          '[--logoloop-gap:0px]',
-          '[--logoloop-logoHeight:28px]',
-          '[--logoloop-logoWidth:auto]',
+          '[--logoloop-gap:var(--logoloop-mobile-gap)] md:[--logoloop-gap:var(--logoloop-desktop-gap)]',
+          '[--logoloop-logoHeight:var(--logoloop-mobile-logoHeight)] md:[--logoloop-logoHeight:var(--logoloop-desktop-logoHeight)]',
+          '[--logoloop-logoWidth:var(--logoloop-mobile-logoWidth)] md:[--logoloop-logoWidth:var(--logoloop-desktop-logoWidth)]',
           scaleOnHover && 'py-[calc(var(--logoloop-logoHeight)*0.1)]',
           className
         ),
