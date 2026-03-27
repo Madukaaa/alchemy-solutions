@@ -634,9 +634,11 @@ export default function CircularGallery({
         <h3 className="text-lg font-bold tracking-wider text-brand md:text-2xl">
           {activeItem.title}
         </h3>
-        <p className="mt-2 text-base leading-[1.3] text-white/92 sm:text-xl">
-          {activeItem.description}
-        </p>
+        <div className="flex min-h-[5.5rem] items-center justify-center sm:min-h-[6.5rem]">
+          <p className="mt-2 text-base leading-[1.3] text-white/92 sm:text-xl">
+            {activeItem.description}
+          </p>
+        </div>
         <p className="mt-2 text-sm leading-[1.3] text-white/60 sm:text-base">{activeItem.category}</p>
       </div>
     </section>
