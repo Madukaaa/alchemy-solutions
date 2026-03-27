@@ -254,7 +254,7 @@ export default function TeamSection() {
                   src={member.img}
                   alt={member.name}
                   loading="lazy"
-                  className="h-85 w-full rounded-2xl object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                  className="h-85 w-full rounded-2xl object-cover grayscale transition-all duration-500 ease-out group-hover:scale-110 group-hover:grayscale-0"
                 />
               </div>
               <div className="relative">
@@ -312,7 +312,7 @@ export default function TeamSection() {
                     src={member.img}
                     alt={member.name}
                     loading="lazy"
-                    className="h-95 w-full rounded-2xl object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    className="h-95 w-full rounded-2xl object-cover grayscale transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0"
                   />
                 </div>
                 <div className="relative mt-4">
