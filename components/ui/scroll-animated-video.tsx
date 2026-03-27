@@ -151,12 +151,12 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
   const isClient = typeof window !== "undefined";
 
   // Inline CSS variables for tuning (non-theme)
-  const cssVars: CSSProperties = useMemo(
+  const cssVars = useMemo(
     () => ({
       ["--initial-size" as any]: typeof initialBoxSize === "number" ? `${initialBoxSize}px` : initialBoxSize,
       ["--overlay-blur" as any]: `${overlayBlur}px`,
     }),
-    [initialBoxSize, overlayBlur],
+    [initialBoxSize, overlayBlur]
   );
 
   // Scroll + GSAP wiring
@@ -172,8 +172,8 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
     let heroTl: any;
     let mainTl: any;
     let overlayDarkenEl: HTMLDivElement | null = null;
-
     let rafCb: ((t: number) => void) | null = null;
+    let onResize: (() => void) | null = null;
 
     let cancelled = false;
 
@@ -285,7 +285,11 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
       // Target size
       const target = (() => {
         if (targetSize === "fullscreen") {
-          return { width: "92vw", height: "92vh", borderRadius: 0 };
+          return {
+            width: window.innerWidth <= 768 ? "100vw" : "92vw",
+            height: window.innerWidth <= 768 ? "100dvh" : "92vh",
+            borderRadius: 0,
+          };
         }
         return {
           width: `${targetSize.widthVw ?? 92}vw`,
@@ -299,6 +303,8 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
         borderRadius: 20,
         filter: "none",
         clipPath: "inset(0 0 0 0)",
+        width: "var(--initial-size)",
+        height: "var(--initial-size)",
       });
       gsap.set(overlayEl, { clipPath: "inset(100% 0 0 0)" });
       gsap.set(overlayContent, {
@@ -356,6 +362,12 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
           overlayRevealDelay + 0.05,
         );
 
+      // Refresh on resize for mobile
+      onResize = () => {
+        ScrollTrigger?.refresh();
+      };
+      window.addEventListener("resize", onResize);
+
       // Try to play video
       const videoEl = container.querySelector(
         "video",
@@ -398,6 +410,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
         }
       } catch {}
       try {
+        if (onResize) window.removeEventListener("resize", onResize);
         (lenis as any)?.off?.("scroll", (ScrollTrigger as any)?.update);
         (lenis as any)?.destroy?.();
       } catch {}
@@ -451,6 +464,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
         playsInline={playsInline}
         autoPlay={autoPlay || muted}
         className="hsv-video-el"
+        style={{ width: "100%", height: "100%", objectFit: "cover" }}
       >
         {sources}
       </video>
@@ -602,6 +616,7 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
           position: sticky;
           top: 0;
           height: 100vh;
+          height: 100dvh;
           display: grid;
           place-items: center;
         }
@@ -714,85 +729,83 @@ export const HeroScrollVideo: React.FC<HeroScrollVideoProps> = ({
           .hsv-overlay-content { max-width: 40ch; }
         }
 
-        /* Mobile-specific styles for 1080p ratio video display */
-        @media (max-width: 640px) {
-          .hsv-scroll {
-            height: 120vh !important; /* Reduce dark gap on mobile */
+        /* Mobile and Tablet Styles */
+        @media (max-width: 1024px) {
+          .hsv-container {
+            height: auto;
+            min-height: 40vh;
+            padding: 40px 20px;
           }
-          
-          .hsv-media {
-            width: calc(100vw - 2rem) !important;
-            height: calc((100vw - 2rem) * 9 / 16) !important;
-            max-width: 90vw !important;
-            max-height: calc(90vw * 9 / 16) !important;
-            margin: 0 auto;
-            border-radius: 12px;
-          }
-          
-          .hsv-sticky.is-sticky {
-            padding: 1rem;
-            box-sizing: border-box;
-            height: 100vh;
-            display: grid;
-            place-items: center;
-          }
-          
-          /* Ensure video maintains aspect ratio on mobile */
-          .hsv-video-el {
-            object-fit: contain !important;
-          }
-
           .hsv-title {
-            font-size: clamp(28px, 9vw, 36px) !important;
-            margin-bottom: 0.5rem;
+            font-size: clamp(36px, 10vw, 72px);
+          }
+          .hsv-media {
+            --initial-size: clamp(280px, 60vw, 500px);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .hsv-container {
+            min-height: 50vh;
+            padding: 60px 16px;
+          }
+          .hsv-title {
+            font-size: clamp(32px, 12vw, 56px);
           }
           .hsv-subtitle {
-            font-size: 13px !important;
-            margin-bottom: 0.8rem;
+            font-size: clamp(14px, 4vw, 20px);
+            margin-bottom: 1rem;
+          }
+          .hsv-meta {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
           }
           .hsv-credits {
-            font-size: 11px !important;
-            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            margin-top: 0.8rem;
+          }
+          .hsv-media {
+            --initial-size: clamp(240px, 70vw, 400px);
+          }
+          .hsv-overlay-content h3 {
+            font-size: clamp(20px, 6vw, 32px);
+          }
+          .hsv-overlay-content p {
+            font-size: clamp(13px, 3.5vw, 15px);
           }
         }
 
-        /* Extra small mobile devices */
-        @media (max-width: 475px) {
-          .hsv-scroll {
-            height: 110vh !important; /* Further reduce scroll height on smaller mobile */
+        @media (max-width: 480px) {
+          .hsv-container {
+            padding: 40px 12px;
           }
-          
+          .hsv-title {
+            font-size: clamp(28px, 15vw, 44px);
+          }
           .hsv-media {
-            width: calc(100vw - 1.5rem) !important;
-            height: calc((100vw - 1.5rem) * 9 / 16) !important;
-            max-width: 92vw !important;
-            max-height: calc(92vw * 9 / 16) !important;
-            margin: 0.75rem;
-            border-radius: 10px;
+            --initial-size: clamp(200px, 85vw, 320px);
           }
-          
-          .hsv-sticky.is-sticky {
-            padding: 0.75rem;
+          .hsv-scroll {
+            height: 180vh !important; /* more scroll space for mobile */
+          }
+          .hsv-overlay {
+            padding: 20px;
+          }
+          .hsv-overlay-content {
+            gap: 0.6rem;
           }
         }
 
-        /* Very small mobile devices */
-        @media (max-width: 375px) {
-          .hsv-scroll {
-            height: 100vh !important; /* Minimize scroll height on very small screens */
+        /* Landscape orientation fixes for mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+          .hsv-container {
+            min-height: 80vh;
           }
-          
-          .hsv-media {
-            width: calc(100vw - 1rem) !important;
-            height: calc((100vw - 1rem) * 9 / 16) !important;
-            max-width: 95vw !important;
-            max-height: calc(95vw * 9 / 16) !important;
-            margin: 0.5rem;
-            border-radius: 8px;
-          }
-          
           .hsv-sticky.is-sticky {
-            padding: 0.5rem;
+            height: 100vh;
+          }
+          .hsv-media {
+            --initial-size: 150px;
           }
         }
       `}</style>
